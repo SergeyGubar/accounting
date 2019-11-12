@@ -3,9 +3,9 @@
     <color name="colorPrimary">#90caf9</color>
     <color name="colorPrimaryDark">#5d99c6</color>
     <color name="colorAccent">@color/colorPrimary</color>
-
     <color name="primaryColor">#90caf9</color>
     <color name="primaryLightColor">#c3fdff</color>
     <color name="primaryDarkColor">#5d99c6</color>
-    <color name="primaryTextColor">#000000</color>z
+    <color name="primaryTextColor">#000000</color>
+    <color name="textColorOnPrimary">#ffffff</color>
 </resources>
