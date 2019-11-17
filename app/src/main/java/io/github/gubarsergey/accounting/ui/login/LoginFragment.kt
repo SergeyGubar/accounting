@@ -1,20 +1,17 @@
 package io.github.gubarsergey.accounting.ui.login
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import io.github.gubarsergey.accounting.BaseFragment
 
 import io.github.gubarsergey.accounting.R
+import io.github.gubarsergey.accounting.navigation.NavigationState
+import io.github.gubarsergey.accounting.navigation.Router
 import io.github.gubarsergey.accounting.util.*
-import kotlinx.android.synthetic.main.login_fragment.*
+import kotlinx.android.synthetic.main.fragment_login.*
 import timber.log.Timber
-
 
 class LoginFragment : BaseFragment<LoginFragment.Props>() {
 
@@ -29,10 +26,8 @@ class LoginFragment : BaseFragment<LoginFragment.Props>() {
         object Loading : Props()
     }
 
-    override val layout: Int = R.layout.login_fragment
+    override val layout: Int = R.layout.fragment_login
     override fun getProps() = viewModel.props
-
-    // TODO: Inject viewmodel and get rid of getProps
     private val viewModel: LoginViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -73,7 +68,7 @@ class LoginFragment : BaseFragment<LoginFragment.Props>() {
     }
 
     private fun navigateToMainScreen() {
-        val action = LoginFragmentDirections.actionLoginFragmentToMainFragment()
+        val action = Router.getNavigateAction(NavigationState.LOGIN, NavigationState.MAIN_FRAGMENT)
         findNavController().navigate(action)
     }
 }

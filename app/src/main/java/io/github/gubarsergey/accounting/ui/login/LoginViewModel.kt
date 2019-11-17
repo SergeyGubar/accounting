@@ -14,6 +14,10 @@ class LoginViewModel : BaseViewModel<LoginFragment.Props, LoginViewModel.State>(
 
     override val emptyState: State = State("", "", false)
 
+    init {
+        state = emptyState
+    }
+
     fun emailUpdated(email: String) {
         state = state.copy(email = email)
     }

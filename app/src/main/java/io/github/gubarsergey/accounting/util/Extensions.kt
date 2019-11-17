@@ -6,6 +6,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.EditText
+import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 
@@ -41,4 +42,16 @@ fun View.setViewEnabled() {
 
 fun View.setViewDisabled() {
     this.isEnabled = true
+}
+
+fun View.makeVisible() {
+    this.visibility = View.VISIBLE
+}
+
+fun View.makeInvisible() {
+    this.visibility= View.INVISIBLE
+}
+
+fun View.makeGone() {
+    this.visibility= View.GONE
 }
