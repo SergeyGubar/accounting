@@ -57,7 +57,7 @@ class LoginFragment : BaseFragment<LoginFragment.Props>() {
 
     private fun setupListeners() {
         login_button.setOnClickListener {
-            navigateToMainScreen()
+            viewModel.login()
         }
         login_email_edit_text.addSimpleTextChangeListener { email ->
             viewModel.emailUpdated(email)

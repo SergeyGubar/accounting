@@ -8,4 +8,9 @@ abstract class BaseViewModel<Props, State : Any> : ViewModel() {
     abstract fun map(state: State): Props
     abstract val emptyState: State
     protected lateinit var state: State
+
+    fun stateChanged() {
+        // TODO: Get rid of it
+        props.value = map(state)
+    }
 }
