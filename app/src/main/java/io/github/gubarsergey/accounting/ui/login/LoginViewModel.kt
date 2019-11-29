@@ -2,7 +2,6 @@ package io.github.gubarsergey.accounting.ui.login
 
 import androidx.lifecycle.viewModelScope
 import io.github.gubarsergey.accounting.BaseViewModel
-import io.github.gubarsergey.accounting.data.ApiFactory
 import io.github.gubarsergey.accounting.data.user.Credentials
 import io.github.gubarsergey.accounting.data.user.UserApi
 import io.github.gubarsergey.accounting.data.user.UserRemoteDataSource
@@ -12,7 +11,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
-class LoginViewModel : BaseViewModel<LoginFragment.Props, LoginViewModel.State>() {
+class LoginViewModel(val userRepository: UserRepository) : BaseViewModel<LoginFragment.Props, LoginViewModel.State>() {
 
     data class State(
         val email: String,
@@ -21,10 +20,6 @@ class LoginViewModel : BaseViewModel<LoginFragment.Props, LoginViewModel.State>(
         val emailError: String? = null,
         val passwordError: String? = null
     )
-
-    // DI Users cry here
-    private val userRepository =
-        UserRepository(UserRemoteDataSource(ApiFactory.retrofit().create(UserApi::class.java)))
 
     override val emptyState: State = State("", "", false)
 

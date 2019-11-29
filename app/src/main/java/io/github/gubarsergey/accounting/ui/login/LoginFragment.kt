@@ -2,7 +2,6 @@ package io.github.gubarsergey.accounting.ui.login
 
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import io.github.gubarsergey.accounting.BaseFragment
 
@@ -11,6 +10,7 @@ import io.github.gubarsergey.accounting.navigation.NavigationState
 import io.github.gubarsergey.accounting.navigation.Router
 import io.github.gubarsergey.accounting.util.*
 import kotlinx.android.synthetic.main.fragment_login.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
 class LoginFragment : BaseFragment<LoginFragment.Props>() {
@@ -27,8 +27,8 @@ class LoginFragment : BaseFragment<LoginFragment.Props>() {
     }
 
     override val layout: Int = R.layout.fragment_login
-    override fun getProps() = viewModel.props
-    private val viewModel: LoginViewModel by viewModels()
+    override fun getProps() = vm.props
+    private val vm: LoginViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -57,13 +57,13 @@ class LoginFragment : BaseFragment<LoginFragment.Props>() {
 
     private fun setupListeners() {
         login_button.setOnClickListener {
-            viewModel.login()
+            vm.login()
         }
         login_email_edit_text.addSimpleTextChangeListener { email ->
-            viewModel.emailUpdated(email)
+            vm.emailUpdated(email)
         }
         login_password_edit_text.addSimpleTextChangeListener { password ->
-            viewModel.passwordUpdated(password)
+            vm.passwordUpdated(password)
         }
     }
 
