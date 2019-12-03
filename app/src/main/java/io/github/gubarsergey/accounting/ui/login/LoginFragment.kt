@@ -2,6 +2,8 @@ package io.github.gubarsergey.accounting.ui.login
 
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import io.github.gubarsergey.accounting.BaseFragment
 
@@ -10,6 +12,7 @@ import io.github.gubarsergey.accounting.navigation.NavigationState
 import io.github.gubarsergey.accounting.navigation.Router
 import io.github.gubarsergey.accounting.util.*
 import kotlinx.android.synthetic.main.fragment_login.*
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
@@ -27,12 +30,15 @@ class LoginFragment : BaseFragment<LoginFragment.Props>() {
     }
 
     override val layout: Int = R.layout.fragment_login
-    override fun getProps() = vm.props
     private val vm: LoginViewModel by viewModel()
+    private val props: LiveData<Props> by inject()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupListeners()
+        props.observe(viewLifecycleOwner, Observer {
+            render(it)
+        })
     }
 
     override fun render(props: Props) {

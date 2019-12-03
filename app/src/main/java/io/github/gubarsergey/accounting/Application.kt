@@ -1,9 +1,12 @@
 package io.github.gubarsergey.accounting
 
 import android.app.Application
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import io.github.gubarsergey.accounting.data.user.UserApi
 import io.github.gubarsergey.accounting.data.user.UserRemoteDataSource
 import io.github.gubarsergey.accounting.data.user.UserRepository
+import io.github.gubarsergey.accounting.ui.login.LoginFragment
 import io.github.gubarsergey.accounting.ui.login.LoginViewModel
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -40,8 +43,12 @@ class App : Application() {
         }
 
         val usersModule = module {
+            val props = MutableLiveData<LoginFragment.Props>()
             viewModel {
-                LoginViewModel(get())
+                LoginViewModel(props, get())
+            }
+            single<LiveData<LoginFragment.Props>> {
+                props
             }
             single {
                 UserRemoteDataSource(get<Retrofit>().create(UserApi::class.java))

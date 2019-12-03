@@ -11,7 +11,6 @@ import androidx.lifecycle.Observer
 abstract class BaseFragment<Props>: Fragment() {
 
     abstract val layout: Int
-    abstract fun getProps(): LiveData<Props>
     abstract fun render(props: Props)
 
     override fun onCreateView(
@@ -19,11 +18,4 @@ abstract class BaseFragment<Props>: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(layout, container, false)
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        getProps().observe(viewLifecycleOwner, Observer { props ->
-            render(props)
-        })
-    }
 }

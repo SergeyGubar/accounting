@@ -28,9 +28,6 @@ class MainFragment : BaseFragment<MainFragment.Props>() {
 
     override val layout: Int = R.layout.fragment_main
 
-    override fun getProps(): LiveData<Props> = viewModel.props
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         records_recycler.adapter = adapter
