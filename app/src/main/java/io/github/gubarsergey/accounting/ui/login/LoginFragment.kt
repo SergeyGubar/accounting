@@ -1,6 +1,7 @@
 package io.github.gubarsergey.accounting.ui.login
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -10,6 +11,7 @@ import io.github.gubarsergey.accounting.BaseFragment
 import io.github.gubarsergey.accounting.R
 import io.github.gubarsergey.accounting.navigation.NavigationState
 import io.github.gubarsergey.accounting.navigation.Router
+import io.github.gubarsergey.accounting.redux.Command
 import io.github.gubarsergey.accounting.util.*
 import kotlinx.android.synthetic.main.fragment_login.*
 import org.koin.android.ext.android.inject
@@ -22,21 +24,19 @@ class LoginFragment : BaseFragment<LoginFragment.Props>() {
         data class Idle(
             val email: String,
             val password: String,
-            val emailError: String? = null,
-            val passwordError: String? = null,
-            val emailUpdated: (email: String) -> Unit = { },
-            val passwordUpdated: (email: String) -> Unit = { },
-            val login: () -> Unit = { }
+            val emailError: String?,
+            val passwordError: String?,
+            val emailUpdated: Command.With<String>,
+            val passwordUpdated: Command.With<String>,
+            val login: Command
         ) : Props()
 
         object Loading : Props()
 
-        val idle: Idle?
-            get() = this as? Idle
+        val idle: Idle? get() = this as? Idle
     }
 
     override val layout: Int = R.layout.fragment_login
-    private val vm: LoginViewModel by viewModel()
     private val props: LiveData<Props> by inject()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -72,15 +72,19 @@ class LoginFragment : BaseFragment<LoginFragment.Props>() {
             props.value?.idle?.login?.invoke()
         }
         login_email_edit_text.addSimpleTextChangeListener { email ->
-            vm.emailUpdated(email)
+            props.value?.idle?.emailUpdated?.invoke(email)
         }
         login_password_edit_text.addSimpleTextChangeListener { password ->
-            vm.passwordUpdated(password)
+            props.value?.idle?.passwordUpdated?.invoke(password)
         }
     }
 
     private fun navigateToMainScreen() {
-        val action = Router.getNavigateAction(NavigationState.LOGIN, NavigationState.MAIN_FRAGMENT)
-        findNavController().navigate(action)
+        Handler().postDelayed({
+            val action = Router.getNavigateAction(NavigationState.LOGIN, NavigationState.MAIN_FRAGMENT)
+            findNavController().navigate(action)
+        }, 4000)
+
+
     }
 }

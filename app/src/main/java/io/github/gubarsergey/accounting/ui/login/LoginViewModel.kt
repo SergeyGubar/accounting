@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import io.github.gubarsergey.accounting.BaseViewModel
 import io.github.gubarsergey.accounting.data.user.Credentials
 import io.github.gubarsergey.accounting.data.user.UserRepository
+import io.github.gubarsergey.accounting.redux.Command
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -38,13 +39,13 @@ class LoginViewModel(
                 state.password,
                 state.emailError,
                 state.passwordError,
-                { email ->
+                Command.With { email ->
                     this.dispatch(Action.EmailUpdate(email))
                 },
-                { password ->
+                Command.With { password ->
                     this.dispatch(Action.PasswordUpdate(password))
                 },
-                {
+                Command {
                     viewModelScope.launch {
                         withContext(Dispatchers.IO) {
                             userRepository.login(Credentials(state.email, state.password))
