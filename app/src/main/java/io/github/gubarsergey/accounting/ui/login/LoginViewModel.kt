@@ -11,9 +11,10 @@ import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 class LoginViewModel(
+    state: State,
     private val props: MutableLiveData<LoginFragment.Props>,
     private val userRepository: UserRepository
-) : BaseViewModel<LoginFragment.Props, LoginViewModel.State, LoginViewModel.Action>() {
+) : BaseViewModel<LoginFragment.Props, LoginViewModel.State, LoginViewModel.Action>(state) {
 
     data class State(
         val email: String,
@@ -24,38 +25,8 @@ class LoginViewModel(
     )
 
     sealed class Action {
-        data class EmailUpdate(val email: String): Action()
-        data class PasswordUpdate(val password: String): Action()
-    }
-
-    override val emptyState: State = State("", "", false)
-
-    init {
-        state = emptyState
-    }
-
-    fun emailUpdated(email: String) {
-        dispatch(Action.EmailUpdate(email))
-    }
-
-    fun passwordUpdated(password: String) {
-        dispatch(Action.PasswordUpdate(password))
-    }
-
-    fun login() {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                userRepository.login(Credentials(state.email, state.password))
-                    .fold(
-                        { token ->
-                            Timber.d("token $token")
-                        },
-                        { ex ->
-                            Timber.e(ex)
-                        }
-                    )
-            }
-        }
+        data class EmailUpdate(val email: String) : Action()
+        data class PasswordUpdate(val password: String) : Action()
     }
 
     override fun map(state: State): LoginFragment.Props {
@@ -66,7 +37,28 @@ class LoginViewModel(
                 state.email,
                 state.password,
                 state.emailError,
-                state.passwordError
+                state.passwordError,
+                { email ->
+                    this.dispatch(Action.EmailUpdate(email))
+                },
+                { password ->
+                    this.dispatch(Action.PasswordUpdate(password))
+                },
+                {
+                    viewModelScope.launch {
+                        withContext(Dispatchers.IO) {
+                            userRepository.login(Credentials(state.email, state.password))
+                                .fold(
+                                    { token ->
+                                        Timber.d("token $token")
+                                    },
+                                    { ex ->
+                                        Timber.e(ex)
+                                    }
+                                )
+                        }
+                    }
+                }
             )
         }
     }

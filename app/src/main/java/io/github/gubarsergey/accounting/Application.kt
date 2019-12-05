@@ -45,7 +45,7 @@ class App : Application() {
         val usersModule = module {
             val props = MutableLiveData<LoginFragment.Props>()
             viewModel {
-                LoginViewModel(props, get())
+                LoginViewModel(LoginViewModel.State("", "", false), props, get())
             }
             single<LiveData<LoginFragment.Props>> {
                 props

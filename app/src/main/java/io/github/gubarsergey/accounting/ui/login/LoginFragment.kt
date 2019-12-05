@@ -23,10 +23,16 @@ class LoginFragment : BaseFragment<LoginFragment.Props>() {
             val email: String,
             val password: String,
             val emailError: String? = null,
-            val passwordError: String? = null
+            val passwordError: String? = null,
+            val emailUpdated: (email: String) -> Unit = { },
+            val passwordUpdated: (email: String) -> Unit = { },
+            val login: () -> Unit = { }
         ) : Props()
 
         object Loading : Props()
+
+        val idle: Idle?
+            get() = this as? Idle
     }
 
     override val layout: Int = R.layout.fragment_login
@@ -63,7 +69,7 @@ class LoginFragment : BaseFragment<LoginFragment.Props>() {
 
     private fun setupListeners() {
         login_button.setOnClickListener {
-            vm.login()
+            props.value?.idle?.login?.invoke()
         }
         login_email_edit_text.addSimpleTextChangeListener { email ->
             vm.emailUpdated(email)
