@@ -6,31 +6,22 @@ import io.github.gubarsergey.accounting.BaseViewModel
 import io.github.gubarsergey.accounting.data.user.Credentials
 import io.github.gubarsergey.accounting.data.user.UserRepository
 import io.github.gubarsergey.accounting.redux.Command
+import io.github.gubarsergey.accounting.redux.Reducer
+import io.github.gubarsergey.accounting.redux.login.LoginAction
+import io.github.gubarsergey.accounting.redux.login.LoginState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 class LoginViewModel(
-    state: State,
-    private val props: MutableLiveData<LoginFragment.Props>,
+    state: LoginState,
+    reduce: Reducer<LoginState>,
+    props: MutableLiveData<LoginFragment.Props>,
     private val userRepository: UserRepository
-) : BaseViewModel<LoginFragment.Props, LoginViewModel.State, LoginViewModel.Action>(state) {
+) : BaseViewModel<LoginFragment.Props, LoginState, LoginAction>(state, reduce, props) {
 
-    data class State(
-        val email: String,
-        val password: String,
-        val isLoading: Boolean,
-        val emailError: String? = null,
-        val passwordError: String? = null
-    )
-
-    sealed class Action {
-        data class EmailUpdate(val email: String) : Action()
-        data class PasswordUpdate(val password: String) : Action()
-    }
-
-    override fun map(state: State): LoginFragment.Props {
+    override fun map(state: LoginState): LoginFragment.Props {
         return if (state.isLoading) {
             LoginFragment.Props.Loading
         } else {
@@ -40,10 +31,10 @@ class LoginViewModel(
                 state.emailError,
                 state.passwordError,
                 Command.With { email ->
-                    this.dispatch(Action.EmailUpdate(email))
+                    this.dispatch(LoginAction.EmailUpdate(email))
                 },
                 Command.With { password ->
-                    this.dispatch(Action.PasswordUpdate(password))
+                    this.dispatch(LoginAction.PasswordUpdate(password))
                 },
                 Command {
                     viewModelScope.launch {
@@ -63,16 +54,4 @@ class LoginViewModel(
             )
         }
     }
-
-    override fun onNewProps(props: LoginFragment.Props) {
-        this.props.postValue(props)
-    }
-
-    override fun reduce(state: State, action: Action): State {
-        return when (action) {
-            is Action.EmailUpdate -> state.copy(email = action.email, emailError = null)
-            is Action.PasswordUpdate -> state.copy(password = action.password, passwordError = null)
-        }
-    }
-
 }

@@ -6,7 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import io.github.gubarsergey.accounting.data.user.UserApi
 import io.github.gubarsergey.accounting.data.user.UserRemoteDataSource
 import io.github.gubarsergey.accounting.data.user.UserRepository
+import io.github.gubarsergey.accounting.redux.login.LoginState
 import io.github.gubarsergey.accounting.ui.login.LoginFragment
+import io.github.gubarsergey.accounting.ui.login.LoginReduce
 import io.github.gubarsergey.accounting.ui.login.LoginViewModel
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -25,7 +27,7 @@ class App : Application() {
             Timber.plant(Timber.DebugTree())
         }
 
-        val networkmodule = module {
+        val networkModule = module {
             single {
                 OkHttpClient()
                     .newBuilder()
@@ -45,7 +47,7 @@ class App : Application() {
         val usersModule = module {
             val props = MutableLiveData<LoginFragment.Props>()
             viewModel {
-                LoginViewModel(LoginViewModel.State("", "", false), props, get())
+                LoginViewModel(LoginState("", "", false), LoginReduce, props, get())
             }
             single<LiveData<LoginFragment.Props>> {
                 props
@@ -61,7 +63,7 @@ class App : Application() {
 
         startKoin {
             androidContext(this@App)
-            modules(listOf(networkmodule, usersModule))
+            modules(listOf(networkModule, usersModule))
         }
     }
 }
