@@ -1,21 +1,19 @@
 package io.github.gubarsergey.accounting.ui.login
 
 import android.os.Bundle
-import android.os.Handler
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import io.github.gubarsergey.accounting.BaseFragment
-
 import io.github.gubarsergey.accounting.R
-import io.github.gubarsergey.accounting.navigation.NavigationState
-import io.github.gubarsergey.accounting.navigation.Router
 import io.github.gubarsergey.accounting.redux.Command
-import io.github.gubarsergey.accounting.util.*
+import io.github.gubarsergey.accounting.util.addSimpleTextChangeListener
+import io.github.gubarsergey.accounting.util.safelySetText
+import io.github.gubarsergey.accounting.util.setViewDisabled
+import io.github.gubarsergey.accounting.util.setViewEnabled
 import kotlinx.android.synthetic.main.fragment_login.*
 import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
 class LoginFragment : BaseFragment<LoginFragment.Props>() {
@@ -80,11 +78,6 @@ class LoginFragment : BaseFragment<LoginFragment.Props>() {
     }
 
     private fun navigateToMainScreen() {
-        Handler().postDelayed({
-            val action = Router.getNavigateAction(NavigationState.LOGIN, NavigationState.MAIN_FRAGMENT)
-            findNavController().navigate(action)
-        }, 4000)
-
-
+        findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToMainFragment())
     }
 }

@@ -6,14 +6,18 @@ import androidx.lifecycle.MutableLiveData
 import io.github.gubarsergey.accounting.data.user.UserApi
 import io.github.gubarsergey.accounting.data.user.UserRemoteDataSource
 import io.github.gubarsergey.accounting.data.user.UserRepository
+import io.github.gubarsergey.accounting.redux.AppReducer
+import io.github.gubarsergey.accounting.redux.AppState
+import io.github.gubarsergey.accounting.redux.Store
+import io.github.gubarsergey.accounting.redux.connect
 import io.github.gubarsergey.accounting.redux.login.LoginState
 import io.github.gubarsergey.accounting.ui.login.LoginFragment
 import io.github.gubarsergey.accounting.ui.login.LoginReduce
-import io.github.gubarsergey.accounting.ui.login.LoginViewModel
+import io.github.gubarsergey.accounting.ui.login.LoginConnector
+import io.github.gubarsergey.accounting.util.asConsumer
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
-import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -21,6 +25,13 @@ import retrofit2.converter.gson.GsonConverterFactory
 import timber.log.Timber
 
 class App : Application() {
+
+    private val store = Store(
+        AppState(),
+        AppReducer
+    )
+
+
     override fun onCreate() {
         super.onCreate()
         if (BuildConfig.DEBUG) {
@@ -46,8 +57,13 @@ class App : Application() {
 
         val usersModule = module {
             val props = MutableLiveData<LoginFragment.Props>()
-            viewModel {
-                LoginViewModel(LoginState("", "", false), LoginReduce, props, get())
+            single {
+                LoginConnector(get()).also { connector ->
+                    connector.connect(
+                        store,
+                        props.asConsumer()
+                    )
+                }
             }
             single<LiveData<LoginFragment.Props>> {
                 props

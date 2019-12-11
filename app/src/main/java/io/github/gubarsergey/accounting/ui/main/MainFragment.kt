@@ -1,14 +1,13 @@
 package io.github.gubarsergey.accounting.ui.main
 
 import android.os.Bundle
-import android.os.Handler
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.github.gubarsergey.accounting.BaseFragment
 import io.github.gubarsergey.accounting.R
 import kotlinx.android.synthetic.main.fragment_main.*
+import org.koin.android.ext.android.inject
 import timber.log.Timber
 
 class MainFragment : BaseFragment<MainFragment.Props>() {
@@ -23,7 +22,7 @@ class MainFragment : BaseFragment<MainFragment.Props>() {
         )
     }
 
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel: MainConnector by inject()
     private val adapter = AccountanceRecyclerAdapter()
 
     override val layout: Int = R.layout.fragment_main

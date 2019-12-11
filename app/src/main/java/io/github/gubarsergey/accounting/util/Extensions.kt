@@ -9,6 +9,8 @@ import android.widget.EditText
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.MutableLiveData
+import io.github.gubarsergey.accounting.redux.Consumer
 
 
 inline fun FragmentManager.transaction(func: FragmentTransaction.() -> FragmentTransaction) {
@@ -28,6 +30,10 @@ fun EditText.addSimpleTextChangeListener(listener: (String) -> Unit) {
         }
 
     })
+}
+
+fun <T> MutableLiveData<T>.asConsumer(): Consumer<T> {
+    return { t -> this.postValue(t) }
 }
 
 fun EditText.safelySetText(text: String) {
