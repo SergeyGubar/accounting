@@ -2,8 +2,6 @@ package io.github.gubarsergey.accounting.redux
 
 import android.os.Handler
 
-enum class BackPressure { NEVER, READY }
-
 class Observer<State>(
     private val handler: Handler = Handler(),
     private val observe: (State) -> Unit
@@ -27,7 +25,6 @@ class Store<State>(
     fun dispatch(action: ReduxAction) {
         handler.post {
             state = reducer.reduce(state, action)
-
             observers.forEach { fireState(state, it) }
         }
     }
@@ -38,9 +35,7 @@ class Store<State>(
 
     fun addObserver(observer: Observer<State>) {
         handler.post {
-            require(observer !in observers) {
-                "Observer $observer is already subscribed for updates of state"
-            }
+            require(observer !in observers) { "Observer $observer is already subscribed for updates of state" }
 
             observers += observer
 

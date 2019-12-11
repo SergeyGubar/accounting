@@ -10,10 +10,8 @@ import io.github.gubarsergey.accounting.redux.AppReducer
 import io.github.gubarsergey.accounting.redux.AppState
 import io.github.gubarsergey.accounting.redux.Store
 import io.github.gubarsergey.accounting.redux.connect
-import io.github.gubarsergey.accounting.redux.login.LoginState
-import io.github.gubarsergey.accounting.ui.login.LoginFragment
-import io.github.gubarsergey.accounting.ui.login.LoginReduce
 import io.github.gubarsergey.accounting.ui.login.LoginConnector
+import io.github.gubarsergey.accounting.ui.login.LoginFragment
 import io.github.gubarsergey.accounting.util.asConsumer
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -31,55 +29,41 @@ class App : Application() {
         AppReducer
     )
 
-
     override fun onCreate() {
         super.onCreate()
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
 
-        val networkModule = module {
-            single {
-                OkHttpClient()
-                    .newBuilder()
-                    .addInterceptor(HttpLoggingInterceptor())
-                    .build()
-            }
+        val client = OkHttpClient()
+            .newBuilder()
+            .addInterceptor(HttpLoggingInterceptor())
+            .build()
 
-            single {
-                Retrofit.Builder()
-                    .client(get())
-                    .baseUrl("http://10.0.2.2:8080")
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build()
-            }
-        }
+        val retrofit = Retrofit.Builder()
+            .client(client)
+            .baseUrl("http://10.0.2.2:8080")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
 
         val usersModule = module {
             val props = MutableLiveData<LoginFragment.Props>()
-            single {
-                LoginConnector(get()).also { connector ->
-                    connector.connect(
-                        store,
-                        props.asConsumer()
-                    )
-                }
+            val userRemoteDataSource = UserRemoteDataSource(retrofit.create(UserApi::class.java))
+            val userRepository = UserRepository(userRemoteDataSource)
+
+            LoginConnector(userRepository).also { connector ->
+                connector.connect(
+                    store,
+                    props.asConsumer()
+                )
             }
-            single<LiveData<LoginFragment.Props>> {
-                props
-            }
-            single {
-                UserRemoteDataSource(get<Retrofit>().create(UserApi::class.java))
-            }
-            single {
-                UserRepository(get())
-            }
+            single<LiveData<LoginFragment.Props>> { props }
         }
 
 
         startKoin {
             androidContext(this@App)
-            modules(listOf(networkModule, usersModule))
+            modules(listOf(usersModule))
         }
     }
 }
