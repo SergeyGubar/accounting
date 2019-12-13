@@ -30,21 +30,18 @@ class LoginConnector(
                                     state.loginState.email,
                                     state.loginState.password
                                 )
+                            ).fold(
+                                { token ->
+                                    Timber.d("token $token")
+                                },
+                                { ex ->
+
+                                }
                             )
-                                .fold(
-                                    { token ->
-                                        Timber.d("token $token")
-                                    },
-                                    { ex ->
-                                        Timber.e(ex)
-                                    }
-                                )
                         }
                     }
                 }
             )
         }
     }
-
-
 }

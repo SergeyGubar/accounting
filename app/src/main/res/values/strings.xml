@@ -3,4 +3,11 @@
     <string name="hint_email">Email</string>
     <string name="hint_password">Password</string>
     <string name="hint_login">Login</string>
+    <string name="error_connection_timeout">Connection timeout</string>
+    <string name="error_unauthorized">Unauthorized</string>
+    <string name="error_bad_request">Bad Request</string>
+    <string name="error_not_found">Not Found</string>
+    <string name="error_generic">Something went wrong. Please, try again</string>
+
+
 </resources>
