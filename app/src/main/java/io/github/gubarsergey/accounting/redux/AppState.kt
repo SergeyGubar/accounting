@@ -1,14 +1,22 @@
 package io.github.gubarsergey.accounting.redux
 
+import io.github.gubarsergey.accounting.navigation.AppNavReduce
+import io.github.gubarsergey.accounting.navigation.AppNavState
+import io.github.gubarsergey.accounting.redux.login.LoginNetworkReduce
+import io.github.gubarsergey.accounting.redux.login.LoginNetworkState
+import io.github.gubarsergey.accounting.redux.login.LoginReduce
 import io.github.gubarsergey.accounting.redux.login.LoginState
-import io.github.gubarsergey.accounting.ui.login.LoginReduce
 
 data class AppState(
-    val loginState: LoginState = LoginState()
+    val navState: AppNavState = AppNavState.Login,
+    val loginState: LoginState = LoginState(),
+    val loginNetworkState: LoginNetworkState = LoginNetworkState.None
 )
 
-object AppReducer: Reducer<AppState>({ state, action ->
+object AppReducer : Reducer<AppState>({ state, action ->
     AppState(
-        LoginReduce(state.loginState, action)
+        AppNavReduce(state.navState, action),
+        LoginReduce(state.loginState, action),
+        LoginNetworkReduce(state.loginNetworkState, action)
     )
 })

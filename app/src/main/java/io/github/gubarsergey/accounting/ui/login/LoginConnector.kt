@@ -4,6 +4,7 @@ import io.github.gubarsergey.accounting.data.user.Credentials
 import io.github.gubarsergey.accounting.data.user.UserRepository
 import io.github.gubarsergey.accounting.redux.*
 import io.github.gubarsergey.accounting.redux.login.LoginAction
+import io.github.gubarsergey.accounting.redux.login.LoginNetwork
 import kotlinx.coroutines.*
 import timber.log.Timber
 
@@ -23,6 +24,8 @@ class LoginConnector(
                 store.bindWith { email -> LoginAction.EmailUpdate(email) },
                 store.bindWith { password -> LoginAction.PasswordUpdate(password) },
                 Command {
+                    store.dispatch(LoginNetwork.Started)
+                    Timber.d("started")
                     launch {
                         withContext(Dispatchers.IO) {
                             userRepository.login(
@@ -33,9 +36,11 @@ class LoginConnector(
                             ).fold(
                                 { token ->
                                     Timber.d("token $token")
+                                    store.dispatch(LoginNetwork.Finished(token))
                                 },
                                 { ex ->
-
+                                    Timber.d("error $ex")
+                                    store.dispatch(LoginNetwork.FinishedWithError(ex))
                                 }
                             )
                         }
