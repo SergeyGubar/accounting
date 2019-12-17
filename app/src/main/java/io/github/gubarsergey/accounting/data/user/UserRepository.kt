@@ -11,11 +11,14 @@ class UserRepository(
     private val remoteDataSource: UserRemoteDataSource
 ) {
     suspend fun login(credentials: Credentials): Either<String, NetworkError> {
+        Timber.d("Login started")
         return try {
             val result = remoteDataSource.loginAsync(credentials)
+            Timber.d("Login finished successfully, token: ${result.token}")
             Either.left(result.token)
+
         } catch (ex: Exception) {
-            Timber.e(ex)
+            Timber.e(ex, "Login error")
             Either.right(networkErrorMapper(ex))
         }
     }

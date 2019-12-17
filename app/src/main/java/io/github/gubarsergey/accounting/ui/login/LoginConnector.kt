@@ -25,7 +25,6 @@ class LoginConnector(
                 store.bindWith { password -> LoginAction.PasswordUpdate(password) },
                 Command {
                     store.dispatch(LoginNetwork.Started)
-                    Timber.d("started")
                     launch {
                         withContext(Dispatchers.IO) {
                             userRepository.login(
@@ -35,11 +34,9 @@ class LoginConnector(
                                 )
                             ).fold(
                                 { token ->
-                                    Timber.d("token $token")
                                     store.dispatch(LoginNetwork.Finished(token))
                                 },
                                 { ex ->
-                                    Timber.d("error $ex")
                                     store.dispatch(LoginNetwork.FinishedWithError(ex))
                                 }
                             )
