@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
 import io.github.gubarsergey.accounting.BaseFragment
 import io.github.gubarsergey.accounting.R
 import io.github.gubarsergey.accounting.redux.Command
@@ -75,9 +74,5 @@ class LoginFragment : BaseFragment<LoginFragment.Props>() {
         login_password_edit_text.addSimpleTextChangeListener { password ->
             props.value?.idle?.passwordUpdated?.invoke(password)
         }
-    }
-
-    private fun navigateToMainScreen() {
-        findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToMainFragment())
     }
 }
