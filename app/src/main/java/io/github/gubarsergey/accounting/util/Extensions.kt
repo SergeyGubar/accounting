@@ -12,12 +12,21 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.MutableLiveData
 import io.github.gubarsergey.accounting.redux.Consumer
 
+private const val SHARED_PREF_NAME = "accounting-shared-pref"
 
 inline fun FragmentManager.transaction(func: FragmentTransaction.() -> FragmentTransaction) {
     beginTransaction().func().commit()
 }
 
 val Context.inflater get() = LayoutInflater.from(this)
+
+val Context.defaultSharedPreferences
+    get() = this.getSharedPreferences(
+        SHARED_PREF_NAME,
+        Context.MODE_PRIVATE
+    )
+
+
 
 fun EditText.addSimpleTextChangeListener(listener: (String) -> Unit) {
     this.addTextChangedListener(object : TextWatcher {
@@ -28,7 +37,6 @@ fun EditText.addSimpleTextChangeListener(listener: (String) -> Unit) {
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             listener.invoke(s.toString())
         }
-
     })
 }
 
@@ -55,9 +63,9 @@ fun View.makeVisible() {
 }
 
 fun View.makeInvisible() {
-    this.visibility= View.INVISIBLE
+    this.visibility = View.INVISIBLE
 }
 
 fun View.makeGone() {
-    this.visibility= View.GONE
+    this.visibility = View.GONE
 }

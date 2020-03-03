@@ -1,19 +1,24 @@
 package io.github.gubarsergey.accounting.ui.login
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import arrow.optics.optics
 import io.github.gubarsergey.accounting.BaseFragment
 import io.github.gubarsergey.accounting.R
+import io.github.gubarsergey.accounting.databinding.FragmentLoginBinding
 import io.github.gubarsergey.accounting.redux.Command
+import io.github.gubarsergey.accounting.redux.nop
 import io.github.gubarsergey.accounting.util.addSimpleTextChangeListener
 import io.github.gubarsergey.accounting.util.safelySetText
 import io.github.gubarsergey.accounting.util.setViewDisabled
 import io.github.gubarsergey.accounting.util.setViewEnabled
-import kotlinx.android.synthetic.main.fragment_login.*
 import org.koin.android.ext.android.inject
 import timber.log.Timber
+
 
 class LoginFragment : BaseFragment<LoginFragment.Props>() {
 
@@ -29,12 +34,21 @@ class LoginFragment : BaseFragment<LoginFragment.Props>() {
         ) : Props()
 
         object Loading : Props()
-
-        val idle: Idle? get() = this as? Idle
     }
+
 
     override val layout: Int = R.layout.fragment_login
     private val props: LiveData<Props> by inject()
+    private lateinit var binding: FragmentLoginBinding
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentLoginBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -48,16 +62,16 @@ class LoginFragment : BaseFragment<LoginFragment.Props>() {
         Timber.d("render props $props")
         when (props) {
             is Props.Idle -> {
-                login_email_edit_text.setViewEnabled()
-                login_password_edit_text.setViewEnabled()
-                login_button.setViewEnabled()
-                login_email_edit_text.safelySetText(props.email)
-                login_password_edit_text.safelySetText(props.password)
+                binding.loginEmailEditText.setViewEnabled()
+                binding.loginPasswordEditText.setViewEnabled()
+                binding.loginButton.setViewEnabled()
+                binding.loginEmailEditText.safelySetText(props.email)
+                binding.loginPasswordEditText.safelySetText(props.password)
             }
             is Props.Loading -> {
-                login_email_edit_text.setViewDisabled()
-                login_password_edit_text.setViewDisabled()
-                login_button.setViewDisabled()
+                binding.loginEmailEditText.setViewDisabled()
+                binding.loginPasswordEditText.setViewDisabled()
+                binding.loginButton.setViewDisabled()
                 // TODO: Show loading
             }
         }
@@ -65,14 +79,15 @@ class LoginFragment : BaseFragment<LoginFragment.Props>() {
     }
 
     private fun setupListeners() {
-        login_button.setOnClickListener {
-            props.value?.idle?.login?.invoke()
+        binding.loginButton.setOnClickListener {
+            //            Props.Idle.
+            //            props.value?.idle?.login?.invoke()
         }
-        login_email_edit_text.addSimpleTextChangeListener { email ->
-            props.value?.idle?.emailUpdated?.invoke(email)
+        binding.loginEmailEditText.addSimpleTextChangeListener { email ->
+            //            props.value?.idle?.emailUpdated?.invoke(email)
         }
-        login_password_edit_text.addSimpleTextChangeListener { password ->
-            props.value?.idle?.passwordUpdated?.invoke(password)
+        binding.loginPasswordEditText.addSimpleTextChangeListener { password ->
+            //            props.value?.idle?.passwordUpdated?.invoke(password)
         }
     }
 }

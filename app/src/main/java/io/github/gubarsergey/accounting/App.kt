@@ -45,9 +45,10 @@ class App : Application() {
             .addInterceptor(HttpLoggingInterceptor())
             .build()
 
+        // TODO: Move to env
         val retrofit = Retrofit.Builder()
             .client(client)
-            .baseUrl("http://10.0.2.2:8080")
+            .baseUrl("http://34.102.228.226/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 

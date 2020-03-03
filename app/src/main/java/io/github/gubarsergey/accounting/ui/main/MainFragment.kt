@@ -1,13 +1,13 @@
 package io.github.gubarsergey.accounting.ui.main
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import androidx.fragment.app.viewModels
+import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.github.gubarsergey.accounting.BaseFragment
 import io.github.gubarsergey.accounting.R
-import kotlinx.android.synthetic.main.fragment_main.*
-import org.koin.android.ext.android.inject
+import io.github.gubarsergey.accounting.databinding.FragmentMainBinding
 import timber.log.Timber
 
 class MainFragment : BaseFragment<MainFragment.Props>() {
@@ -22,15 +22,25 @@ class MainFragment : BaseFragment<MainFragment.Props>() {
         )
     }
 
-    private val viewModel: MainConnector by inject()
+    //    private val viewModel: MainConnector by inject()
     private val adapter = AccountanceRecyclerAdapter()
+    private lateinit var fragmentMainBinding: FragmentMainBinding
 
     override val layout: Int = R.layout.fragment_main
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        fragmentMainBinding = FragmentMainBinding.inflate(inflater, container, false)
+        return fragmentMainBinding.root
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        records_recycler.adapter = adapter
-        records_recycler.layoutManager = LinearLayoutManager(requireContext())
+        fragmentMainBinding.recordsRecycler.adapter = adapter
+        fragmentMainBinding.recordsRecycler.layoutManager = LinearLayoutManager(requireContext())
         adapter.submitList(
             listOf(
                 Props.Record("1", -64, "Some category"),
