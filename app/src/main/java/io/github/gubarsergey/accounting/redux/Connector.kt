@@ -10,7 +10,6 @@ interface Connector<State, Props>: CoroutineScope {
     override val coroutineContext: CoroutineContext get() = Dispatchers.Main
 }
 
-
 typealias Consumer<Props> = (Props) -> Unit
 
 inline fun <State, Props> Connector<State, Props>.connect(

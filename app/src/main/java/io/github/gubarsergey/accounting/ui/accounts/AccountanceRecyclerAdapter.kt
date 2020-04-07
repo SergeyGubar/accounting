@@ -1,4 +1,4 @@
-package io.github.gubarsergey.accounting.ui.main
+package io.github.gubarsergey.accounting.ui.accounts
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil

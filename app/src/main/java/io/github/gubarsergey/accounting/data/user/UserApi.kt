@@ -1,5 +1,6 @@
 package io.github.gubarsergey.accounting.data.user
 
+import com.google.gson.annotations.SerializedName
 import retrofit2.http.Body
 import retrofit2.http.POST
 
@@ -9,10 +10,10 @@ data class Credentials(
 )
 
 data class LoginResponse(
-    val token: String
+    @SerializedName("access_token") val token: String
 )
 
 interface UserApi {
-    @POST("login")
+    @POST("users/login")
     suspend fun loginAsync(@Body credentials: Credentials): LoginResponse
 }

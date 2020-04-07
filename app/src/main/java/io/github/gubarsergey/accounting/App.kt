@@ -10,12 +10,16 @@ import io.github.gubarsergey.accounting.navigation.NavigationOperator
 import io.github.gubarsergey.accounting.navigation.NavProps
 import io.github.gubarsergey.accounting.navigation.NavigationConnector
 import io.github.gubarsergey.accounting.navigation.Router
+import io.github.gubarsergey.accounting.operator.SharedPrefConnector
+import io.github.gubarsergey.accounting.operator.SharedPrefOperator
+import io.github.gubarsergey.accounting.operator.asConsumer
 import io.github.gubarsergey.accounting.redux.AppReducer
 import io.github.gubarsergey.accounting.redux.AppState
 import io.github.gubarsergey.accounting.redux.Store
 import io.github.gubarsergey.accounting.redux.connect
 import io.github.gubarsergey.accounting.ui.login.LoginConnector
 import io.github.gubarsergey.accounting.ui.login.LoginFragment
+import io.github.gubarsergey.accounting.util.SharedPrefHelper
 import io.github.gubarsergey.accounting.util.asConsumer
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -74,10 +78,18 @@ class App : Application() {
             }
         }
 
+        val operatorsModule = module {
+            single {
+                SharedPrefOperator(get(), SharedPrefHelper()).also { operator ->
+                    SharedPrefConnector().connect(store, operator.asConsumer)
+                }
+            }
+        }
+
 
         startKoin {
             androidContext(this@App)
-            modules(listOf(usersModule, navModule))
+            modules(listOf(usersModule, navModule, operatorsModule))
         }
     }
 }

@@ -3,6 +3,7 @@ package io.github.gubarsergey.accounting.ui.login
 import io.github.gubarsergey.accounting.data.user.Credentials
 import io.github.gubarsergey.accounting.data.user.UserRepository
 import io.github.gubarsergey.accounting.redux.*
+import io.github.gubarsergey.accounting.redux.auth.ReadTokenAction
 import io.github.gubarsergey.accounting.redux.login.LoginAction
 import io.github.gubarsergey.accounting.redux.login.LoginNetwork
 import kotlinx.coroutines.*
@@ -42,6 +43,9 @@ class LoginConnector(
                             )
                         }
                     }
+                },
+                Command {
+                    store.dispatch(ReadTokenAction)
                 }
             )
         }

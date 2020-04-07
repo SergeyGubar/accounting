@@ -23,10 +23,13 @@ class MainActivity : AppCompatActivity(), Router {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        binding = ActivityMainBinding.inflate(inflater)
-        setSupportActionBar(binding.mainToolbar)
+
         // Temporary solution, let's say so
+        navigationOperator
+        binding = ActivityMainBinding.inflate(inflater)
+        setContentView(binding.root)
+        setSupportActionBar(binding.mainToolbar)
+
         findNavController(R.id.nav_host_fragment).addOnDestinationChangedListener { _, destination, _ ->
             when (val status = destination.toToolbarStatus()) {
                 is ToolbarStatus.Visible -> {
@@ -38,7 +41,6 @@ class MainActivity : AppCompatActivity(), Router {
                 }
             }
         }
-        navigationOperator
     }
 
     override fun navigate(navState: NavProps) {

@@ -10,6 +10,7 @@ import arrow.optics.optics
 import io.github.gubarsergey.accounting.BaseFragment
 import io.github.gubarsergey.accounting.R
 import io.github.gubarsergey.accounting.databinding.FragmentLoginBinding
+import io.github.gubarsergey.accounting.operator.SharedPrefOperator
 import io.github.gubarsergey.accounting.redux.Command
 import io.github.gubarsergey.accounting.redux.nop
 import io.github.gubarsergey.accounting.util.addSimpleTextChangeListener
@@ -20,7 +21,12 @@ import org.koin.android.ext.android.inject
 import timber.log.Timber
 
 
-class LoginFragment : BaseFragment<LoginFragment.Props>() {
+class LoginFragment : BaseFragment<LoginFragment.Props, FragmentLoginBinding>() {
+
+    override fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentLoginBinding = FragmentLoginBinding.inflate(inflater, container, false)
 
     sealed class Props {
         data class Idle(
@@ -30,25 +36,19 @@ class LoginFragment : BaseFragment<LoginFragment.Props>() {
             val passwordError: String?,
             val emailUpdated: Command.With<String>,
             val passwordUpdated: Command.With<String>,
-            val login: Command
+            val login: Command,
+            val didLoad: Command
         ) : Props()
 
         object Loading : Props()
     }
 
+    // Functional optics for poor people (very poor)
+    private val Props?.idleUnsafe get() = this as Props.Idle
+    private val Props?.idleSafe get() = this as? Props.Idle
 
-    override val layout: Int = R.layout.fragment_login
     private val props: LiveData<Props> by inject()
-    private lateinit var binding: FragmentLoginBinding
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentLoginBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+    private val sharedPrefOperator: SharedPrefOperator by inject()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -56,9 +56,11 @@ class LoginFragment : BaseFragment<LoginFragment.Props>() {
         props.observe(viewLifecycleOwner, Observer {
             render(it)
         })
+        sharedPrefOperator
+        props.value.idleSafe?.didLoad?.invoke()
     }
 
-    override fun render(props: Props) {
+    private fun render(props: Props) {
         Timber.d("render props $props")
         when (props) {
             is Props.Idle -> {
@@ -80,14 +82,13 @@ class LoginFragment : BaseFragment<LoginFragment.Props>() {
 
     private fun setupListeners() {
         binding.loginButton.setOnClickListener {
-            //            Props.Idle.
-            //            props.value?.idle?.login?.invoke()
+            props.value.idleUnsafe.login.invoke()
         }
         binding.loginEmailEditText.addSimpleTextChangeListener { email ->
-            //            props.value?.idle?.emailUpdated?.invoke(email)
+            props.value.idleUnsafe.emailUpdated.invoke(email)
         }
         binding.loginPasswordEditText.addSimpleTextChangeListener { password ->
-            //            props.value?.idle?.passwordUpdated?.invoke(password)
+            props.value.idleUnsafe.passwordUpdated.invoke(password)
         }
     }
 }
