@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="io.github.gubarsergey.accounting.ui.accounts.MainFragment"
+        android:name="io.github.gubarsergey.accounting.ui.accounts.AccountsFragment"
         android:label="main_fragment"
         tools:layout="@layout/fragment_main" />
     <fragment

@@ -40,6 +40,7 @@ class SharedPrefOperator(
                 this.lastToken = token
             }
             is Props.PutToken -> {
+                Timber.d("Put token")
                 if (props.token != lastToken) {
                     prefHelper.saveToken(context, props.token)
                     props.result?.invoke()

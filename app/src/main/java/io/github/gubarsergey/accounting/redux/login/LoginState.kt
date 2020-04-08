@@ -3,8 +3,8 @@ package io.github.gubarsergey.accounting.redux.login
 import io.github.gubarsergey.accounting.redux.Reducer
 
 data class LoginState(
-    val email: String = "",
-    val password: String = "",
+    val email: String = "sergey.gubar187@gmail.com",
+    val password: String = "megubar123",
     val isLoading: Boolean = false,
     val emailError: String? = null,
     val passwordError: String? = null

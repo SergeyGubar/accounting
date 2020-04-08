@@ -8,7 +8,7 @@ import io.github.gubarsergey.accounting.databinding.ItemRecordBinding
 import io.github.gubarsergey.accounting.util.inflater
 
 class AccountanceRecyclerAdapter :
-    ListAdapter<MainFragment.Props.Record, AccountanceRecyclerAdapter.RecordViewHolder>(
+    ListAdapter<AccountsFragment.Props.Transaction, AccountanceRecyclerAdapter.RecordViewHolder>(
         RecordsDiffUtilCallback()
     ) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecordViewHolder =
@@ -18,23 +18,23 @@ class AccountanceRecyclerAdapter :
         holder.bind(getItem(position))
 
     inner class RecordViewHolder(private val recordBinding: ItemRecordBinding) :
-        BaseViewHolder<MainFragment.Props.Record>(recordBinding.root) {
-        override fun render(item: MainFragment.Props.Record) {
+        BaseViewHolder<AccountsFragment.Props.Transaction>(recordBinding.root) {
+        override fun render(item: AccountsFragment.Props.Transaction) {
             recordBinding.itemRecordAmountTextView.text = item.amount.toString()
             recordBinding.itemRecordCategoryTextView.text = item.category
         }
     }
 
-    class RecordsDiffUtilCallback : DiffUtil.ItemCallback<MainFragment.Props.Record>() {
+    class RecordsDiffUtilCallback : DiffUtil.ItemCallback<AccountsFragment.Props.Transaction>() {
         override fun areItemsTheSame(
-            oldItem: MainFragment.Props.Record,
-            newItem: MainFragment.Props.Record
+            oldItem: AccountsFragment.Props.Transaction,
+            newItem: AccountsFragment.Props.Transaction
         ): Boolean = oldItem.id == newItem.id
 
 
         override fun areContentsTheSame(
-            oldItem: MainFragment.Props.Record,
-            newItem: MainFragment.Props.Record
+            oldItem: AccountsFragment.Props.Transaction,
+            newItem: AccountsFragment.Props.Transaction
         ): Boolean {
             return oldItem.amount == newItem.amount &&
                     oldItem.category == newItem.category

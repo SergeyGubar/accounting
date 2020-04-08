@@ -7,7 +7,6 @@ import io.github.gubarsergey.accounting.redux.auth.ReadTokenAction
 import io.github.gubarsergey.accounting.redux.login.LoginAction
 import io.github.gubarsergey.accounting.redux.login.LoginNetwork
 import kotlinx.coroutines.*
-import timber.log.Timber
 
 class LoginConnector(
     private val userRepository: UserRepository
