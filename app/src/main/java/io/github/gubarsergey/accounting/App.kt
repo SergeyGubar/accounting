@@ -4,13 +4,17 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import io.github.gubarsergey.accounting.data.TokenInterceptor
-import io.github.gubarsergey.accounting.data.account.AccountsRepository
 import io.github.gubarsergey.accounting.data.account.AccountsApi
+import io.github.gubarsergey.accounting.data.account.AccountsRepository
+import io.github.gubarsergey.accounting.data.category.CategoryApi
+import io.github.gubarsergey.accounting.data.category.CategoryRepository
+import io.github.gubarsergey.accounting.data.transaction.TransactionsApi
+import io.github.gubarsergey.accounting.data.transaction.TransactionsRepository
 import io.github.gubarsergey.accounting.data.user.UserApi
 import io.github.gubarsergey.accounting.data.user.UserRepository
-import io.github.gubarsergey.accounting.navigation.NavigationOperator
 import io.github.gubarsergey.accounting.navigation.NavProps
 import io.github.gubarsergey.accounting.navigation.NavigationConnector
+import io.github.gubarsergey.accounting.navigation.NavigationOperator
 import io.github.gubarsergey.accounting.navigation.Router
 import io.github.gubarsergey.accounting.operator.SharedPrefConnector
 import io.github.gubarsergey.accounting.operator.SharedPrefOperator
@@ -22,6 +26,7 @@ import io.github.gubarsergey.accounting.redux.connect
 import io.github.gubarsergey.accounting.ui.accounts.AccountsInteractor
 import io.github.gubarsergey.accounting.ui.login.LoginConnector
 import io.github.gubarsergey.accounting.ui.login.LoginFragment
+import io.github.gubarsergey.accounting.ui.transaction.AddTransactionsInteractor
 import io.github.gubarsergey.accounting.util.SharedPrefHelper
 import io.github.gubarsergey.accounting.util.asConsumer
 import okhttp3.OkHttpClient
@@ -71,9 +76,25 @@ class App : Application() {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
+        val networkModule = module {
+            val accountsApi = retrofit.create(AccountsApi::class.java)
+            val transactionsApi = retrofit.create(TransactionsApi::class.java)
+            val categoryApi = retrofit.create(CategoryApi::class.java)
+            single {
+                AccountsRepository(accountsApi, transactionsApi)
+            }
+            single {
+                CategoryRepository(categoryApi)
+            }
+            single {
+                TransactionsRepository(transactionsApi)
+            }
+        }
+
         val usersModule = module {
             val props = MutableLiveData<LoginFragment.Props>()
             val userApi = retrofit.create(UserApi::class.java)
+
             val userRepository =
                 UserRepository(userApi)
 
@@ -87,23 +108,10 @@ class App : Application() {
         }
 
         val accountsModule = module {
-            val accountsApi = retrofit.create(AccountsApi::class.java)
-            single {
-                AccountsRepository(accountsApi)
-            }
             single {
                 AccountsInteractor(get(), MutableLiveData())
             }
         }
-
-        val navModule = module {
-            single { (router: Router) ->
-                NavigationOperator(NavProps.LOGIN, router).also { operator ->
-                    NavigationConnector().connect(store, operator.asConsumer())
-                }
-            }
-        }
-
 
         val operatorsModule = module {
             single {
@@ -111,12 +119,31 @@ class App : Application() {
                     SharedPrefConnector().connect(store, operator.asConsumer)
                 }
             }
+            single { (router: Router) ->
+                NavigationOperator(NavProps.LOGIN, router).also { operator ->
+                    NavigationConnector().connect(store, operator.asConsumer())
+                }
+            }
+        }
+
+        val addTransactionModule = module {
+            factory {
+                AddTransactionsInteractor(get(), get(), get(), MutableLiveData(), MutableLiveData())
+            }
         }
 
 
         startKoin {
             androidContext(this@App)
-            modules(listOf(usersModule, navModule, operatorsModule, accountsModule))
+            modules(
+                listOf(
+                    usersModule,
+                    networkModule,
+                    operatorsModule,
+                    accountsModule,
+                    addTransactionModule
+                )
+            )
         }
     }
 }

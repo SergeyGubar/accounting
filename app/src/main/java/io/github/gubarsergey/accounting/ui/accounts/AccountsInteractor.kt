@@ -2,6 +2,7 @@ package io.github.gubarsergey.accounting.ui.accounts
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import io.github.gubarsergey.accounting.data.transaction.TransactionDto
 import io.github.gubarsergey.accounting.data.account.AccountsRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -23,14 +24,14 @@ class AccountsInteractor(
     val props: LiveData<AccountsFragment.Props> = _props
 
     data class AccountsState(
-        val selectedAccountId: String? = null,
         val accountsInfo: Map<String, AccountInfo> = emptyMap()
     ) {
         data class AccountInfo(
             val title: String,
             val type: String,
             val ownerId: String,
-            val currentAmount: Int
+            val currentAmount: Int,
+            val transactions: List<TransactionDto> = emptyList()
         )
     }
 
@@ -41,7 +42,6 @@ class AccountsInteractor(
                     AccountsState()
                 } else {
                     AccountsState(
-                        accounts.first().id,
                         accounts.associateBy({ it.id },
                             {
                                 AccountsState.AccountInfo(
@@ -55,9 +55,28 @@ class AccountsInteractor(
                 }
                 stateUpdated(state)
             }, {
-                Timber.e("ERROR")
+                Timber.e("ERROR $it")
             })
         }
+    }
+
+    fun loadTransactions(accountId: String) {
+        launch {
+            accountsRepository.loadTransactions(accountId).fold({ result ->
+                stateUpdated(
+                    state.copy(accountsInfo = state.accountsInfo.map { kv ->
+                        kv.key to if (kv.key == accountId) {
+                            kv.value.copy(transactions = result)
+                        } else {
+                            kv.value
+                        }
+                    }.toMap())
+                )
+            }, {
+                Timber.e("Error $it")
+            })
+        }
+
     }
 
     private fun stateUpdated(newState: AccountsState) {
@@ -66,12 +85,18 @@ class AccountsInteractor(
     }
 
     private fun map(state: AccountsState): AccountsFragment.Props {
-        val accountInfo = state.accountsInfo[state.selectedAccountId]
-
-        return if (accountInfo == null) {
+        return if (state.accountsInfo.isEmpty()) {
             AccountsFragment.Props()
         } else {
-            AccountsFragment.Props(accountInfo.title, accountInfo.type, emptyList())
+            AccountsFragment.Props(
+                state.accountsInfo.map { kv ->
+                    AccountsFragment.Props.AccountInfo(
+                        kv.key, kv.value.title, kv.value.type, kv.value.transactions.map {
+                            AccountsFragment.Props.Transaction(it.id, it.amount, it.category.title)
+                        }
+                    )
+                }
+            )
         }
     }
 }

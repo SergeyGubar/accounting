@@ -8,6 +8,7 @@ import io.github.gubarsergey.accounting.databinding.ActivityMainBinding
 import io.github.gubarsergey.accounting.navigation.*
 import io.github.gubarsergey.accounting.ui.login.LoginFragmentDirections
 import io.github.gubarsergey.accounting.util.inflater
+import io.github.gubarsergey.accounting.util.makeGone
 import io.github.gubarsergey.accounting.util.makeInvisible
 import io.github.gubarsergey.accounting.util.makeVisible
 import org.koin.android.ext.android.inject
@@ -31,6 +32,15 @@ class MainActivity : AppCompatActivity(), Router {
         setSupportActionBar(binding.mainToolbar)
 
         findNavController(R.id.nav_host_fragment).addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.mainFragment -> {
+                    binding.bottomNavigation.makeVisible()
+                }
+                else -> {
+                    binding.bottomNavigation.makeGone()
+                }
+            }
+
             when (val status = destination.toToolbarStatus()) {
                 is ToolbarStatus.Visible -> {
                     binding.mainToolbar.makeVisible()

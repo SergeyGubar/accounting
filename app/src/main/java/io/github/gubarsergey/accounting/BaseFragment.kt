@@ -9,7 +9,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.viewbinding.ViewBinding
 
-abstract class BaseFragment<Props, Binding: ViewBinding>: Fragment() {
+abstract class BaseFragment<Binding : ViewBinding> : Fragment() {
 
 
     private var _binding: Binding? = null

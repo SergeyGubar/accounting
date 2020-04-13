@@ -15,7 +15,3 @@ data class Account(
     val ownerId: String,
     val type: String
 )
-
-data class LoginResponse(
-    @SerializedName("access_token") val token: String
-)

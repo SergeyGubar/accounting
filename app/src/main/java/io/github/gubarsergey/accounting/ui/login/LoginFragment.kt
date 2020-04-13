@@ -21,7 +21,7 @@ import org.koin.android.ext.android.inject
 import timber.log.Timber
 
 
-class LoginFragment : BaseFragment<LoginFragment.Props, FragmentLoginBinding>() {
+class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
     override fun createBinding(
         inflater: LayoutInflater,
