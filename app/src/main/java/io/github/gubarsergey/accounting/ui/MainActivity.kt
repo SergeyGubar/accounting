@@ -3,6 +3,7 @@ package io.github.gubarsergey.accounting.ui
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
+import androidx.navigation.ui.NavigationUI
 import io.github.gubarsergey.accounting.R
 import io.github.gubarsergey.accounting.databinding.ActivityMainBinding
 import io.github.gubarsergey.accounting.navigation.*
@@ -33,11 +34,11 @@ class MainActivity : AppCompatActivity(), Router {
 
         findNavController(R.id.nav_host_fragment).addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.mainFragment -> {
-                    binding.bottomNavigation.makeVisible()
+                R.id.loginFragment, R.id.addTransactionFragment, R.id.addAccountFragment -> {
+                    binding.bottomNavigation.makeGone()
                 }
                 else -> {
-                    binding.bottomNavigation.makeGone()
+                    binding.bottomNavigation.makeVisible()
                 }
             }
 
@@ -51,6 +52,11 @@ class MainActivity : AppCompatActivity(), Router {
                 }
             }
         }
+
+        NavigationUI.setupWithNavController(
+            binding.bottomNavigation,
+            findNavController(R.id.nav_host_fragment)
+        )
     }
 
     override fun navigate(navState: NavProps) {

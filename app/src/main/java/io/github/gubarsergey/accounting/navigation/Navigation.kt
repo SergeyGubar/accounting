@@ -17,7 +17,8 @@ sealed class ToolbarStatus {
 fun NavDestination.toToolbarStatus(): ToolbarStatus {
     return when (this.id) {
         R.id.loginFragment -> ToolbarStatus.Invisible
-        R.id.mainFragment -> ToolbarStatus.Visible(R.string.app_name)
+        R.id.nav_accounts, R.id.nav_settings -> ToolbarStatus.Visible(R.string.app_name)
+        R.id.addAccountFragment -> ToolbarStatus.Visible(R.string.add_accounts)
         R.id.addTransactionFragment -> ToolbarStatus.Visible(R.string.add_transaction)
         else -> throw IllegalArgumentException("Destination $this has no toolbar status!")
     }

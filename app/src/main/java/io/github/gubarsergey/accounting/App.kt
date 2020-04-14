@@ -23,7 +23,8 @@ import io.github.gubarsergey.accounting.redux.AppReducer
 import io.github.gubarsergey.accounting.redux.AppState
 import io.github.gubarsergey.accounting.redux.Store
 import io.github.gubarsergey.accounting.redux.connect
-import io.github.gubarsergey.accounting.ui.accounts.AccountsInteractor
+import io.github.gubarsergey.accounting.ui.account.AddAccountInteractor
+import io.github.gubarsergey.accounting.ui.transaction.list.AccountsInteractor
 import io.github.gubarsergey.accounting.ui.login.LoginConnector
 import io.github.gubarsergey.accounting.ui.login.LoginFragment
 import io.github.gubarsergey.accounting.ui.transaction.AddTransactionsInteractor
@@ -108,8 +109,11 @@ class App : Application() {
         }
 
         val accountsModule = module {
-            single {
-                AccountsInteractor(get(), MutableLiveData())
+            factory {
+                AccountsInteractor(
+                    get(),
+                    MutableLiveData()
+                )
             }
         }
 
@@ -132,6 +136,12 @@ class App : Application() {
             }
         }
 
+        val addAccountModule = module {
+            factory {
+                AddAccountInteractor(get(), MutableLiveData())
+            }
+        }
+
 
         startKoin {
             androidContext(this@App)
@@ -141,7 +151,8 @@ class App : Application() {
                     networkModule,
                     operatorsModule,
                     accountsModule,
-                    addTransactionModule
+                    addTransactionModule,
+                    addAccountModule
                 )
             )
         }

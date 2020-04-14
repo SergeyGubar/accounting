@@ -1,4 +1,4 @@
-package io.github.gubarsergey.accounting.ui.accounts
+package io.github.gubarsergey.accounting.ui.transaction.list
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -6,10 +6,11 @@ import androidx.recyclerview.widget.RecyclerView
 import io.github.gubarsergey.accounting.databinding.LayoutAccountBinding
 import io.github.gubarsergey.accounting.util.inflater
 
-class AccountsPagerAdapter :
-    RecyclerView.Adapter<AccountsPagerAdapter.AccountPagerViewHolder>() {
+class TransactionsPagerAdapter :
+    RecyclerView.Adapter<TransactionsPagerAdapter.AccountPagerViewHolder>() {
 
-    var props: Props = Props()
+    var props: Props =
+        Props()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -34,7 +35,9 @@ class AccountsPagerAdapter :
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        AccountPagerViewHolder(LayoutAccountBinding.inflate(parent.context.inflater, parent, false))
+        AccountPagerViewHolder(
+            LayoutAccountBinding.inflate(parent.context.inflater, parent, false)
+        )
 
     override fun getItemCount(): Int = props.accountsInfo.size
 
@@ -46,7 +49,8 @@ class AccountsPagerAdapter :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Props.AccountInfo) {
-            val adapter = AccountanceRecyclerAdapter()
+            val adapter =
+                TransactionsRecyclerAdapter()
             binding.accountTitleTextView.text = item.accountTitle
             binding.accountTypeTextView.text = item.accountType
             binding.accountTransactionsRecycler.adapter = adapter

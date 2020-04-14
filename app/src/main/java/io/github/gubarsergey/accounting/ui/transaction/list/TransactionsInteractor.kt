@@ -1,4 +1,4 @@
-package io.github.gubarsergey.accounting.ui.accounts
+package io.github.gubarsergey.accounting.ui.transaction.list
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -16,12 +16,13 @@ interface BaseInteractor : CoroutineScope {
 
 class AccountsInteractor(
     private val accountsRepository: AccountsRepository,
-    private val _props: MutableLiveData<AccountsFragment.Props>
+    private val _props: MutableLiveData<TransactionsFragment.Props>
 ) : BaseInteractor {
 
-    private var state = AccountsState()
+    private var state =
+        AccountsState()
 
-    val props: LiveData<AccountsFragment.Props> = _props
+    val props: LiveData<TransactionsFragment.Props> = _props
 
     data class AccountsState(
         val accountsInfo: Map<String, AccountInfo> = emptyMap()
@@ -84,15 +85,19 @@ class AccountsInteractor(
         this._props.postValue(map(this.state))
     }
 
-    private fun map(state: AccountsState): AccountsFragment.Props {
+    private fun map(state: AccountsState): TransactionsFragment.Props {
         return if (state.accountsInfo.isEmpty()) {
-            AccountsFragment.Props()
+            TransactionsFragment.Props()
         } else {
-            AccountsFragment.Props(
+            TransactionsFragment.Props(
                 state.accountsInfo.map { kv ->
-                    AccountsFragment.Props.AccountInfo(
+                    TransactionsFragment.Props.AccountInfo(
                         kv.key, kv.value.title, kv.value.type, kv.value.transactions.map {
-                            AccountsFragment.Props.Transaction(it.id, it.amount, it.category.title)
+                            TransactionsFragment.Props.Transaction(
+                                it.id,
+                                it.amount,
+                                it.category.title
+                            )
                         }
                     )
                 }

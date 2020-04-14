@@ -30,4 +30,10 @@ class AccountsRepository(
             Either.right(networkErrorMapper(ex))
         }
     }
+
+    suspend fun addAccount(dto: CreateAccountDto): Either<Throwable, Account> {
+        return Either.catch {
+            api.addAccount(dto)
+        }
+    }
 }

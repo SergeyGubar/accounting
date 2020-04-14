@@ -6,10 +6,10 @@
     app:startDestination="@id/loginFragment">
 
     <fragment
-        android:id="@+id/mainFragment"
-        android:name="io.github.gubarsergey.accounting.ui.accounts.AccountsFragment"
+        android:id="@+id/nav_accounts"
+        android:name="io.github.gubarsergey.accounting.ui.transaction.list.TransactionsFragment"
         android:label="main_fragment"
-        tools:layout="@layout/fragment_accounts">
+        tools:layout="@layout/fragment_transactions">
         <action
             android:id="@+id/action_mainFragment_to_addTransactionFragment"
             app:destination="@id/addTransactionFragment" />
@@ -21,7 +21,7 @@
         tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_mainFragment"
-            app:destination="@id/mainFragment"
+            app:destination="@id/nav_accounts"
             app:launchSingleTop="false"
             app:popUpTo="@+id/loginFragment"
             app:popUpToInclusive="true" />
@@ -31,4 +31,18 @@
         android:name="io.github.gubarsergey.accounting.ui.transaction.AddTransactionFragment"
         android:label="AddTransactionFragment"
         tools:layout="@layout/fragment_add_transaction" />
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="io.github.gubarsergey.accounting.ui.settings.SettingsFragment"
+        android:label="SettingsFragment"
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/action_nav_settings_to_addAccountFragment"
+            app:destination="@id/addAccountFragment" />
+    </fragment>
+    <fragment
+        tools:layout="@layout/fragment_add_account"
+        android:id="@+id/addAccountFragment"
+        android:name="io.github.gubarsergey.accounting.ui.account.AddAccountFragment"
+        android:label="AddAccountFragment" />
 </navigation>

@@ -7,7 +7,7 @@ import io.github.gubarsergey.accounting.data.account.AccountsRepository
 import io.github.gubarsergey.accounting.data.category.CategoryDto
 import io.github.gubarsergey.accounting.data.category.CategoryRepository
 import io.github.gubarsergey.accounting.data.transaction.TransactionsRepository
-import io.github.gubarsergey.accounting.ui.accounts.BaseInteractor
+import io.github.gubarsergey.accounting.ui.transaction.list.BaseInteractor
 import kotlinx.coroutines.launch
 import timber.log.Timber
 

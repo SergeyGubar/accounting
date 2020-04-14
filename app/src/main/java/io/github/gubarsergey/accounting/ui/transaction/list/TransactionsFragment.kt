@@ -1,4 +1,4 @@
-package io.github.gubarsergey.accounting.ui.accounts
+package io.github.gubarsergey.accounting.ui.transaction.list
 
 import android.os.Bundle
 import android.os.Handler
@@ -10,16 +10,16 @@ import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import io.github.gubarsergey.accounting.BaseFragment
-import io.github.gubarsergey.accounting.databinding.FragmentAccountsBinding
+import io.github.gubarsergey.accounting.databinding.FragmentTransactionsBinding
 import org.koin.android.ext.android.inject
 import timber.log.Timber
 
-class AccountsFragment : BaseFragment<FragmentAccountsBinding>() {
+class TransactionsFragment : BaseFragment<FragmentTransactionsBinding>() {
 
     override fun createBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentAccountsBinding = FragmentAccountsBinding.inflate(inflater, container, false)
+    ): FragmentTransactionsBinding = FragmentTransactionsBinding.inflate(inflater, container, false)
 
     data class Props(
         val accountsInfo: List<AccountInfo> = emptyList()
@@ -38,7 +38,7 @@ class AccountsFragment : BaseFragment<FragmentAccountsBinding>() {
         )
     }
 
-    private val adapter = AccountsPagerAdapter()
+    private val adapter = TransactionsPagerAdapter()
     private val interactor: AccountsInteractor by inject()
     private var props = Props()
 
@@ -48,7 +48,7 @@ class AccountsFragment : BaseFragment<FragmentAccountsBinding>() {
             render(props)
         })
         binding.accountsAddFab.setOnClickListener {
-            findNavController().navigate(AccountsFragmentDirections.actionMainFragmentToAddTransactionFragment())
+            findNavController().navigate(TransactionsFragmentDirections.actionMainFragmentToAddTransactionFragment())
         }
         binding.accountsViewPager.adapter = adapter
         binding.accountsViewPager.registerOnPageChangeCallback(object :
@@ -69,14 +69,14 @@ class AccountsFragment : BaseFragment<FragmentAccountsBinding>() {
     private fun render(props: Props) {
         Timber.d("render $props")
         this.props = props
-        val pagerProps = AccountsPagerAdapter.Props(
+        val pagerProps = TransactionsPagerAdapter.Props(
             props.accountsInfo.map {
-                AccountsPagerAdapter.Props.AccountInfo(
+                TransactionsPagerAdapter.Props.AccountInfo(
                     it.id,
                     it.title,
                     it.type,
                     it.transactions.map { transaction ->
-                        AccountsPagerAdapter.Props.AccountInfo.Transaction(
+                        TransactionsPagerAdapter.Props.AccountInfo.Transaction(
                             transaction.id,
                             transaction.amount,
                             transaction.category
