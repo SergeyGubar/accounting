@@ -20,5 +20,8 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
         binding.settingsAddAccountButton.setOnClickListener {
             findNavController().navigate(SettingsFragmentDirections.actionNavSettingsToAddAccountFragment())
         }
+        binding.settingsAddCategoryButton.setOnClickListener {
+            findNavController().navigate(SettingsFragmentDirections.actionNavSettingsToAddCategoryFragment())
+        }
     }
 }

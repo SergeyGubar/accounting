@@ -24,6 +24,7 @@ import io.github.gubarsergey.accounting.redux.AppState
 import io.github.gubarsergey.accounting.redux.Store
 import io.github.gubarsergey.accounting.redux.connect
 import io.github.gubarsergey.accounting.ui.account.AddAccountInteractor
+import io.github.gubarsergey.accounting.ui.category.AddCategoryInteractor
 import io.github.gubarsergey.accounting.ui.transaction.list.AccountsInteractor
 import io.github.gubarsergey.accounting.ui.login.LoginConnector
 import io.github.gubarsergey.accounting.ui.login.LoginFragment
@@ -142,6 +143,12 @@ class App : Application() {
             }
         }
 
+        val addCategoryModule = module {
+            factory {
+                AddCategoryInteractor(get(), MutableLiveData())
+            }
+        }
+
 
         startKoin {
             androidContext(this@App)
@@ -152,7 +159,8 @@ class App : Application() {
                     operatorsModule,
                     accountsModule,
                     addTransactionModule,
-                    addAccountModule
+                    addAccountModule,
+                    addCategoryModule
                 )
             )
         }

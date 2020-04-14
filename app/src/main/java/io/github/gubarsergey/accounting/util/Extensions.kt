@@ -6,10 +6,13 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.EditText
+import androidx.annotation.StringRes
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.MutableLiveData
+import com.google.android.material.snackbar.Snackbar
 import io.github.gubarsergey.accounting.redux.Consumer
 
 private const val SHARED_PREF_NAME = "accounting-shared-pref"
@@ -25,7 +28,6 @@ val Context.defaultSharedPreferences
         SHARED_PREF_NAME,
         Context.MODE_PRIVATE
     )
-
 
 
 fun EditText.addSimpleTextChangeListener(listener: (String) -> Unit) {
@@ -68,4 +70,12 @@ fun View.makeInvisible() {
 
 fun View.makeGone() {
     this.visibility = View.GONE
+}
+
+fun Fragment.snackbar(text: String) {
+    Snackbar.make(this.view!!, text, Snackbar.LENGTH_SHORT).show()
+}
+
+fun Fragment.snackbar(@StringRes text: Int) {
+    Snackbar.make(this.view!!, text, Snackbar.LENGTH_SHORT).show()
 }
