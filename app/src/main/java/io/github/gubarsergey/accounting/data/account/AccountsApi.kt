@@ -24,7 +24,7 @@ data class CreateAccountDto(
 data class Account(
     @SerializedName("_id") val id: String,
     val title: String,
-    val currentAmount: Int,
+    val currentAmount: Double,
     val ownerId: String,
     val type: String
 )

@@ -42,6 +42,12 @@
         <action
             android:id="@+id/action_nav_settings_to_addCategoryFragment"
             app:destination="@id/addCategoryFragment" />
+        <action
+            android:id="@+id/action_nav_settings_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_nav_settings_to_categoryTotalSpentFragment"
+            app:destination="@id/categoryTotalSpentFragment" />
     </fragment>
     <fragment
         android:id="@+id/addAccountFragment"
@@ -50,7 +56,17 @@
         tools:layout="@layout/fragment_add_account" />
     <fragment
         android:id="@+id/addCategoryFragment"
-        android:name="io.github.gubarsergey.accounting.ui.category.AddCategoryFragment"
+        android:name="io.github.gubarsergey.accounting.ui.category.add.AddCategoryFragment"
         android:label="AddCategoryFragment"
         tools:layout="@layout/fragment_add_category" />
+    <fragment
+        android:id="@+id/categoryListFragment"
+        android:name="io.github.gubarsergey.accounting.ui.category.list.CategoryListFragment"
+        android:label="CategoryListFragment"
+        tools:layout="@layout/fragment_category_list" />
+    <fragment
+        android:id="@+id/categoryTotalSpentFragment"
+        android:name="io.github.gubarsergey.accounting.ui.category.total.CategoryTotalSpentFragment"
+        android:label="CategoryTotalSpentFragment"
+        tools:layout="@layout/fragment_category_total" />
 </navigation>

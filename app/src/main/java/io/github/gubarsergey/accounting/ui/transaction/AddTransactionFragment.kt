@@ -62,7 +62,7 @@ class AddTransactionFragment : BaseFragment<FragmentAddTransactionBinding>() {
                     findNavController().popBackStack()
                 }
                 Events.Error -> {
-                    Timber.e("AAAAAAA")
+                    Timber.e("RIP")
                 }
             }
         })
@@ -74,7 +74,8 @@ class AddTransactionFragment : BaseFragment<FragmentAddTransactionBinding>() {
         this.interactor.addTransaction(
             binding.addTransactionAccountsSpinner.selectedItemPosition,
             binding.addTransactionAmount.text.toString().toInt(),
-            binding.addTransactionCategorySpinner.selectedItemPosition
+            binding.addTransactionCategorySpinner.selectedItemPosition,
+            binding.addTransactionMessageEditText.text.toString()
         )
     }
 

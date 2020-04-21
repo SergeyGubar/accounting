@@ -1,12 +1,14 @@
 package io.github.gubarsergey.accounting.ui.settings
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import io.github.gubarsergey.accounting.BaseFragment
 import io.github.gubarsergey.accounting.databinding.FragmentSettingsBinding
+import io.github.gubarsergey.accounting.util.SharedPrefHelper
 
 class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
     override fun createBinding(
@@ -22,6 +24,13 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
         }
         binding.settingsAddCategoryButton.setOnClickListener {
             findNavController().navigate(SettingsFragmentDirections.actionNavSettingsToAddCategoryFragment())
+        }
+        binding.settingsLogoutButton.setOnClickListener {
+            SharedPrefHelper().clearToken(requireContext())
+            findNavController().navigate(SettingsFragmentDirections.actionNavSettingsToLoginFragment())
+        }
+        binding.settingsCategoriesTotalSpentButton.setOnClickListener {
+            findNavController().navigate(SettingsFragmentDirections.actionNavSettingsToCategoryTotalSpentFragment())
         }
     }
 }

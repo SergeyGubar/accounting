@@ -7,7 +7,9 @@ import io.github.gubarsergey.accounting.BaseViewHolder
 import io.github.gubarsergey.accounting.databinding.ItemRecordBinding
 import io.github.gubarsergey.accounting.util.inflater
 
-class TransactionsRecyclerAdapter :
+class TransactionsRecyclerAdapter(
+    private val onItemLongClick: (String, String) -> Unit
+) :
     ListAdapter<TransactionsPagerAdapter.Props.AccountInfo.Transaction, TransactionsRecyclerAdapter.RecordViewHolder>(
         RecordsDiffUtilCallback()
     ) {
@@ -22,6 +24,11 @@ class TransactionsRecyclerAdapter :
         override fun render(item: TransactionsPagerAdapter.Props.AccountInfo.Transaction) {
             recordBinding.itemRecordAmountTextView.text = item.amount.toString()
             recordBinding.itemRecordCategoryTextView.text = item.category
+            recordBinding.itemRecordMessageTextView.text = item.message
+            recordBinding.root.setOnLongClickListener {
+                onItemLongClick(item.id, item.message)
+                false
+            }
         }
     }
 

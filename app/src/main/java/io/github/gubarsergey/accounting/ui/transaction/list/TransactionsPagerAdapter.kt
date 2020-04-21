@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 import io.github.gubarsergey.accounting.databinding.LayoutAccountBinding
 import io.github.gubarsergey.accounting.util.inflater
 
-class TransactionsPagerAdapter :
+class TransactionsPagerAdapter(
+    private val onTransactionLongClick: (String, String) -> Unit
+) :
     RecyclerView.Adapter<TransactionsPagerAdapter.AccountPagerViewHolder>() {
 
     var props: Props =
@@ -23,12 +25,14 @@ class TransactionsPagerAdapter :
             val id: String,
             val accountTitle: String,
             val accountType: String,
+            val amount: Double,
             val transactions: List<Transaction>
         ) {
             data class Transaction(
                 val id: String,
                 val amount: Int,
-                val category: String
+                val category: String,
+                val message: String
             )
         }
     }
@@ -45,18 +49,19 @@ class TransactionsPagerAdapter :
         holder.bind(props.accountsInfo[position])
     }
 
-    class AccountPagerViewHolder(val binding: LayoutAccountBinding) :
+    inner class AccountPagerViewHolder(val binding: LayoutAccountBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(item: Props.AccountInfo) {
+        fun bind(item: Props.AccountInfo) = with(binding) {
             val adapter =
-                TransactionsRecyclerAdapter()
-            binding.accountTitleTextView.text = item.accountTitle
-            binding.accountTypeTextView.text = item.accountType
-            binding.accountTransactionsRecycler.adapter = adapter
-            binding.accountTransactionsRecycler.layoutManager =
+                TransactionsRecyclerAdapter(onTransactionLongClick)
+            accountTitleTextView.text = item.accountTitle
+            accountTypeTextView.text = item.accountType
+            accountTransactionsRecycler.adapter = adapter
+            accountTransactionsRecycler.layoutManager =
                 LinearLayoutManager(itemView.context)
             adapter.submitList(item.transactions)
+            accountCurrencyTextView.text = "USD"
+            accountAmountTextView.text = item.amount.toString()
         }
     }
 }

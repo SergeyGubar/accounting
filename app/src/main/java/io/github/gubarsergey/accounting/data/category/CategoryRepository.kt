@@ -2,6 +2,7 @@ package io.github.gubarsergey.accounting.data.category
 
 import arrow.core.Either
 import arrow.core.extensions.either.monad.flatMap
+import io.github.gubarsergey.accounting.data.transaction.CategoryTotalSpentDto
 import io.github.gubarsergey.accounting.errors.NetworkError
 import io.github.gubarsergey.accounting.errors.networkErrorMapper
 import timber.log.Timber

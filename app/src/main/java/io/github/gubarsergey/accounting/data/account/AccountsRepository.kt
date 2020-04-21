@@ -36,4 +36,8 @@ class AccountsRepository(
             api.addAccount(dto)
         }
     }
+
+    suspend fun deleteTransaction(id: String) = Either.catch {
+        transactionsApi.deleteTransaction(id)
+    }
 }

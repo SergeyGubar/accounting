@@ -9,7 +9,7 @@
 
     <item
         android:icon="@drawable/ic_category_white_24dp"
-        android:id="@+id/nav_categories"
+        android:id="@+id/categoryListFragment"
         android:title="@string/categories"
         app:showAsAction="ifRoom"/>
 

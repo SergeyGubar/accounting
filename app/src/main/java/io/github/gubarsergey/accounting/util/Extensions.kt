@@ -7,11 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.EditText
 import androidx.annotation.StringRes
-import androidx.core.view.isVisible
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.MutableLiveData
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import io.github.gubarsergey.accounting.redux.Consumer
 
@@ -78,4 +79,23 @@ fun Fragment.snackbar(text: String) {
 
 fun Fragment.snackbar(@StringRes text: Int) {
     Snackbar.make(this.view!!, text, Snackbar.LENGTH_SHORT).show()
+}
+
+inline fun Fragment.materialAlertDialog(
+    title: String,
+    message: String,
+    positiveButtonText: String,
+    negativeButtonText: String?,
+    crossinline positiveHandler: () -> Unit = { },
+    crossinline negativeHandler: () -> Unit = { }
+): AlertDialog {
+    return MaterialAlertDialogBuilder(requireContext())
+        .setTitle(title)
+        .setMessage(message)
+        .setPositiveButton(positiveButtonText) { _, _ ->
+            positiveHandler()
+        }
+        .setNegativeButton(negativeButtonText) { _, _ ->
+            negativeHandler()
+        }.show()
 }

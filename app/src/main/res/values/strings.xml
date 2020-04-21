@@ -12,6 +12,7 @@
     <string name="settings">Settings</string>
     <string name="categories">Categories</string>
     <string name="add_transaction">Add Transaction</string>
+    <string name="categories_total_spent">Categories Total Spent</string>
     <string name="choose_category">Choose category:</string>
     <string name="enter_amount">Enter amount:</string>
     <string name="amount">Amount</string>
@@ -24,6 +25,15 @@
     <string name="hint_category_title">Title</string>
     <string name="category_title_hint">Enter category title:</string>
     <string name="add_category">Add Category</string>
-
+    <string name="logout">Logout</string>
+    <string name="hint_transaction_message">Message (Optional)</string>
+    <string name="account_type">Account type:</string>
+    <string name="account_amount">Amount:</string>
+    <string name="category">Category:</string>
+    <string name="total_spent">Total spent:</string>
+    <string name="number_of_transactions">Number of transactions:</string>
+    <string name="categories_spent">Categories Total Spent</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
 
 </resources>

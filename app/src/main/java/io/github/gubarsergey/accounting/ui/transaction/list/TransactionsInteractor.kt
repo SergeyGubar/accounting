@@ -19,8 +19,7 @@ class AccountsInteractor(
     private val _props: MutableLiveData<TransactionsFragment.Props>
 ) : BaseInteractor {
 
-    private var state =
-        AccountsState()
+    private var state = AccountsState()
 
     val props: LiveData<TransactionsFragment.Props> = _props
 
@@ -31,7 +30,7 @@ class AccountsInteractor(
             val title: String,
             val type: String,
             val ownerId: String,
-            val currentAmount: Int,
+            val currentAmount: Double,
             val transactions: List<TransactionDto> = emptyList()
         )
     }
@@ -77,7 +76,25 @@ class AccountsInteractor(
                 Timber.e("Error $it")
             })
         }
+    }
 
+    fun deleteTransaction(id: String) {
+        launch {
+            accountsRepository.deleteTransaction(id)
+                .fold({ err ->
+                    Timber.e(err)
+
+                }, { dto ->
+                    Timber.d("Deleted $dto")
+                    // Most optimized state update EVER
+                    stateUpdated(state.copy(accountsInfo = state.accountsInfo.map { kv ->
+                        kv.key to kv.value.copy(
+                            transactions = kv.value.transactions.filter { it.id != id },
+                            currentAmount = if (kv.value.transactions.any { it.id == id }) kv.value.currentAmount - kv.value.transactions.first { it.id == id }.amount else kv.value.currentAmount
+                        )
+                    }.toMap()))
+                })
+        }
     }
 
     private fun stateUpdated(newState: AccountsState) {
@@ -92,11 +109,16 @@ class AccountsInteractor(
             TransactionsFragment.Props(
                 state.accountsInfo.map { kv ->
                     TransactionsFragment.Props.AccountInfo(
-                        kv.key, kv.value.title, kv.value.type, kv.value.transactions.map {
+                        kv.key,
+                        kv.value.title,
+                        kv.value.type,
+                        kv.value.currentAmount,
+                        kv.value.transactions.map {
                             TransactionsFragment.Props.Transaction(
                                 it.id,
                                 it.amount,
-                                it.category.title
+                                it.category.title,
+                                it.message
                             )
                         }
                     )

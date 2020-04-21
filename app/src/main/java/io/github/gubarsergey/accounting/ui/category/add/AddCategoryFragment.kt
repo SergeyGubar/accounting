@@ -1,4 +1,4 @@
-package io.github.gubarsergey.accounting.ui.category
+package io.github.gubarsergey.accounting.ui.category.add
 
 import android.os.Bundle
 import android.view.LayoutInflater

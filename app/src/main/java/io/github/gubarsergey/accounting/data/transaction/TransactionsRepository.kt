@@ -11,14 +11,21 @@ class TransactionsRepository(
     suspend fun addTransaction(
         accountId: String,
         amount: Int,
-        categoryId: String
+        categoryId: String,
+        message: String
     ): Either<TransactionDto, NetworkError> {
         return try {
-            val transaction = api.addTransaction(AddTransactionDto(accountId, amount, categoryId))
+            val transaction =
+                api.addTransaction(CreateTransactionDto(accountId, amount, categoryId, message))
             Either.left(transaction)
         } catch (ex: Exception) {
             Timber.e(ex, "Load accounts error ")
             Either.right(networkErrorMapper(ex))
         }
     }
+
+    suspend fun getCategoryTotalSpent(): Either<Throwable, List<CategoryTotalSpentDto>> =
+        Either.catch {
+            api.getGategoriesTotalSpent()
+        }
 }

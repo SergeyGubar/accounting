@@ -10,9 +10,9 @@
         android:id="@+id/account_title_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:textAppearance="?android:attr/textAppearance"
+        android:textAppearance="?textAppearanceBody2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="No Title" />
@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
-        android:textAppearance="?android:attr/textAppearance"
+        android:textAppearance="?textAppearanceBody2"
         app:layout_constraintBottom_toBottomOf="@+id/account_title_text_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/account_title_text_view"
@@ -36,6 +36,47 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/account_title_text_view" />
+        app:layout_constraintTop_toBottomOf="@+id/account_currency_text_view" />
+
+    <TextView
+        android:id="@+id/account_type_hint_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="@string/account_type"
+        android:textAppearance="?textAppearanceBody2"
+        app:layout_constraintEnd_toStartOf="@+id/account_type_text_view"
+        app:layout_constraintTop_toTopOf="@+id/account_type_text_view" />
+
+    <TextView
+        android:id="@+id/account_amount_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textAppearance="?textAppearanceBody2"
+        app:layout_constraintEnd_toEndOf="@+id/account_type_text_view"
+        app:layout_constraintTop_toBottomOf="@+id/account_type_text_view"
+        tools:text="1560" />
+
+    <TextView
+        android:id="@+id/account_amount_hint_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="@string/account_amount"
+        android:textAppearance="?textAppearanceBody2"
+        app:layout_constraintBottom_toBottomOf="@+id/account_amount_text_view"
+        app:layout_constraintEnd_toStartOf="@+id/account_amount_text_view"
+        app:layout_constraintTop_toTopOf="@+id/account_amount_text_view" />
+
+    <TextView
+        android:id="@+id/account_currency_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textAppearance="?textAppearanceBody2"
+        app:layout_constraintStart_toStartOf="@+id/account_title_text_view"
+        app:layout_constraintTop_toBottomOf="@+id/account_title_text_view"
+        tools:text="USD" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

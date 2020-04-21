@@ -6,7 +6,10 @@
     android:layout_height="64dp"
     android:layout_marginStart="@dimen/spacing_medium"
     android:layout_marginTop="@dimen/spacing_medium"
-    android:layout_marginEnd="@dimen/spacing_medium">
+    android:layout_marginEnd="@dimen/spacing_medium"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/colorPrimary"
+    app:strokeWidth="1dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -19,6 +22,7 @@
             android:layout_marginStart="@dimen/spacing_big"
             android:layout_marginTop="@dimen/spacing_big"
             android:layout_marginBottom="@dimen/spacing_big"
+            android:textAppearance="?textAppearanceBody1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -31,10 +35,23 @@
             android:layout_marginTop="@dimen/spacing_big"
             android:layout_marginEnd="@dimen/spacing_big"
             android:layout_marginBottom="@dimen/spacing_big"
+            android:textAppearance="?textAppearanceBody1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="-64" />
+
+        <TextView
+            android:id="@+id/item_record_message_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            style="?textAppearanceBody1"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/item_record_amount_text_view"
+            app:layout_constraintStart_toEndOf="@+id/item_record_category_text_view"
+            app:layout_constraintTop_toTopOf="@+id/item_record_category_text_view"
+            tools:text="Some message" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

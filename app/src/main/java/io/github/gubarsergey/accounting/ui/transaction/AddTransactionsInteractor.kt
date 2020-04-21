@@ -49,12 +49,13 @@ class AddTransactionsInteractor(
         }
     }
 
-    fun addTransaction(accountIndex: Int, amount: Int, categoryIndex: Int) {
+    fun addTransaction(accountIndex: Int, amount: Int, categoryIndex: Int, message: String) {
         launch {
             transactionsRepository.addTransaction(
                 state.accounts[accountIndex].id,
                 amount,
-                state.categories[categoryIndex].id
+                state.categories[categoryIndex].id,
+                message
             ).fold({
                 _events.postValue(AddTransactionFragment.Events.Success)
             }, {

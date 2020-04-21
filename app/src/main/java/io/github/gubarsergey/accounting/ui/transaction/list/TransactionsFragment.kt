@@ -10,7 +10,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import io.github.gubarsergey.accounting.BaseFragment
+import io.github.gubarsergey.accounting.R
 import io.github.gubarsergey.accounting.databinding.FragmentTransactionsBinding
+import io.github.gubarsergey.accounting.util.materialAlertDialog
 import org.koin.android.ext.android.inject
 import timber.log.Timber
 
@@ -28,17 +30,19 @@ class TransactionsFragment : BaseFragment<FragmentTransactionsBinding>() {
             val id: String,
             val title: String,
             val type: String,
+            val amount: Double,
             val transactions: List<Transaction>
         )
 
         data class Transaction(
             val id: String,
             val amount: Int,
-            val category: String
+            val category: String,
+            val message: String?
         )
     }
 
-    private val adapter = TransactionsPagerAdapter()
+    private val adapter = TransactionsPagerAdapter(::onDeleteClicked)
     private val interactor: AccountsInteractor by inject()
     private var props = Props()
 
@@ -75,15 +79,27 @@ class TransactionsFragment : BaseFragment<FragmentTransactionsBinding>() {
                     it.id,
                     it.title,
                     it.type,
+                    it.amount,
                     it.transactions.map { transaction ->
                         TransactionsPagerAdapter.Props.AccountInfo.Transaction(
                             transaction.id,
                             transaction.amount,
-                            transaction.category
+                            transaction.category,
+                            transaction.message ?: ""
                         )
                     })
             }
         )
         adapter.props = pagerProps
+    }
+
+    private fun onDeleteClicked(id: String, name: String) {
+        materialAlertDialog(
+            "Delete $name?", "This action will delete selected transaction.", getString(
+                R.string.ok
+            ), getString(R.string.cancel), {
+                interactor.deleteTransaction(id)
+            }
+        )
     }
 }

@@ -3,7 +3,6 @@ package io.github.gubarsergey.accounting.redux
 class Command(private val action: () -> Unit) {
     companion object {
         fun nop() = Command {}
-
     }
 
     operator fun invoke() = action()

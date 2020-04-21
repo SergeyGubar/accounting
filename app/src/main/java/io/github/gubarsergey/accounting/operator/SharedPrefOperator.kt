@@ -31,10 +31,10 @@ class SharedPrefOperator(
     override fun consume(props: Props) {
         when (props) {
             is Props.ReadToken -> {
-                if (lastToken != null) {
-                    props.result?.invoke(lastToken)
-                    return
-                }
+//                if (lastToken != null) {
+//                    props.result?.invoke(lastToken)
+//                    return
+//                }
                 val token = prefHelper.getToken(context)
                 props.result?.invoke(token)
                 this.lastToken = token
@@ -53,7 +53,6 @@ class SharedPrefOperator(
 
 class SharedPrefConnector : Connector<AppState, SharedPrefOperator.Props> {
     override fun map(state: AppState, store: Store<AppState>): SharedPrefOperator.Props {
-        Timber.d("map ${state.authState.needsRead}")
         return when {
             state.authState.needsRead -> {
                 SharedPrefOperator.Props.ReadToken(store.bindWith {

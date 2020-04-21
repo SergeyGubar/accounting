@@ -19,21 +19,21 @@ import io.github.gubarsergey.accounting.navigation.Router
 import io.github.gubarsergey.accounting.operator.SharedPrefConnector
 import io.github.gubarsergey.accounting.operator.SharedPrefOperator
 import io.github.gubarsergey.accounting.operator.asConsumer
-import io.github.gubarsergey.accounting.redux.AppReducer
-import io.github.gubarsergey.accounting.redux.AppState
-import io.github.gubarsergey.accounting.redux.Store
-import io.github.gubarsergey.accounting.redux.connect
+import io.github.gubarsergey.accounting.redux.*
 import io.github.gubarsergey.accounting.ui.account.AddAccountInteractor
-import io.github.gubarsergey.accounting.ui.category.AddCategoryInteractor
-import io.github.gubarsergey.accounting.ui.transaction.list.AccountsInteractor
+import io.github.gubarsergey.accounting.ui.category.add.AddCategoryInteractor
+import io.github.gubarsergey.accounting.ui.category.list.CategoryListInteractor
+import io.github.gubarsergey.accounting.ui.category.total.CategoryTotalSpentInteractor
 import io.github.gubarsergey.accounting.ui.login.LoginConnector
 import io.github.gubarsergey.accounting.ui.login.LoginFragment
 import io.github.gubarsergey.accounting.ui.transaction.AddTransactionsInteractor
+import io.github.gubarsergey.accounting.ui.transaction.list.AccountsInteractor
 import io.github.gubarsergey.accounting.util.SharedPrefHelper
 import io.github.gubarsergey.accounting.util.asConsumer
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -145,10 +145,31 @@ class App : Application() {
 
         val addCategoryModule = module {
             factory {
-                AddCategoryInteractor(get(), MutableLiveData())
+                AddCategoryInteractor(
+                    get(),
+                    MutableLiveData()
+                )
             }
         }
 
+        val categoryListModule = module {
+            viewModel {
+                CategoryListInteractor(
+                    get(),
+                    MutableLiveData()
+                )
+            }
+        }
+
+        val categoryTotalSpentModule = module {
+            viewModel {
+                CategoryTotalSpentInteractor(
+                    get(),
+                    MutableLiveData(),
+                    MutableLiveData()
+                )
+            }
+        }
 
         startKoin {
             androidContext(this@App)
@@ -160,7 +181,9 @@ class App : Application() {
                     accountsModule,
                     addTransactionModule,
                     addAccountModule,
-                    addCategoryModule
+                    addCategoryModule,
+                    categoryListModule,
+                    categoryTotalSpentModule
                 )
             )
         }
