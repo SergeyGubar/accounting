@@ -17,6 +17,9 @@ interface TransactionsApi {
 
     @GET("transactions/category/categoryTotalSpent")
     suspend fun getGategoriesTotalSpent(): List<CategoryTotalSpentDto>
+
+    @POST("transactions/report/timeRange")
+    suspend fun getTimeRangeReport(@Body dto: GenerateTimeRangeReportDto): TimeRangeReport
 }
 
 data class TransactionDto(
@@ -42,5 +45,26 @@ data class CategoryTotalSpentDto(
     data class CategoryTotalId(
         val categoryId: String,
         val name: String
+    )
+}
+
+typealias TimeRangeReport = List<DailySpentReport>
+
+data class GenerateTimeRangeReportDto(
+    val startDate: String,
+    val endDate: String,
+    val accountId: String
+)
+
+data class DailySpentReport(
+    @SerializedName("_id") val id: Id,
+    val totalSpent: Double,
+    val count: Int
+) {
+    data class Id(
+        val month: Int,
+        val day: Int,
+        val year: Int,
+        val createdAt: String
     )
 }

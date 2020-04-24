@@ -32,5 +32,8 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
         binding.settingsCategoriesTotalSpentButton.setOnClickListener {
             findNavController().navigate(SettingsFragmentDirections.actionNavSettingsToCategoryTotalSpentFragment())
         }
+        binding.settingsTimeReportButton.setOnClickListener {
+            findNavController().navigate(SettingsFragmentDirections.actionNavSettingsToTimeRangeReportFragment())
+        }
     }
 }

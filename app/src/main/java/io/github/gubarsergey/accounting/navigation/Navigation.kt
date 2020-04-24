@@ -22,6 +22,7 @@ fun NavDestination.toToolbarStatus(): ToolbarStatus {
         R.id.addCategoryFragment -> ToolbarStatus.Visible(R.string.add_category)
         R.id.addTransactionFragment -> ToolbarStatus.Visible(R.string.add_transaction)
         R.id.categoryTotalSpentFragment -> ToolbarStatus.Visible(R.string.categories_total_spent)
+        R.id.timeRangeReportFragment -> ToolbarStatus.Visible(R.string.time_report)
         else -> throw IllegalArgumentException("Destination $this has no toolbar status!")
     }
 }

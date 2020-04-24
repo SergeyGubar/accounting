@@ -48,6 +48,9 @@
         <action
             android:id="@+id/action_nav_settings_to_categoryTotalSpentFragment"
             app:destination="@id/categoryTotalSpentFragment" />
+        <action
+            android:id="@+id/action_nav_settings_to_timeRangeReportFragment"
+            app:destination="@id/timeRangeReportFragment" />
     </fragment>
     <fragment
         android:id="@+id/addAccountFragment"
@@ -69,4 +72,9 @@
         android:name="io.github.gubarsergey.accounting.ui.category.total.CategoryTotalSpentFragment"
         android:label="CategoryTotalSpentFragment"
         tools:layout="@layout/fragment_category_total" />
+    <fragment
+        android:id="@+id/timeRangeReportFragment"
+        android:name="io.github.gubarsergey.accounting.ui.transaction.report.TimeRangeReportFragment"
+        android:label="TimeRangeReportFragment"
+        tools:layout="@layout/fragment_time_range_report" />
 </navigation>

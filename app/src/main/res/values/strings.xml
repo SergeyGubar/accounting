@@ -35,5 +35,12 @@
     <string name="categories_spent">Categories Total Spent</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+    <string name="generate">Generate</string>
+    <string name="start">Start</string>
+    <string name="end">End</string>
+    <string name="unknown">Unknown</string>
+    <string name="time_report">Time report</string>
+    <string name="date">Date:</string>
+    <string name="total_amount">Total amount:</string>
 
 </resources>

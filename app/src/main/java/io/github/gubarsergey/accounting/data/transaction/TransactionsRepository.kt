@@ -28,4 +28,19 @@ class TransactionsRepository(
         Either.catch {
             api.getGategoriesTotalSpent()
         }
+
+    suspend fun getTimeRangeReport(
+        start: String,
+        end: String,
+        accountId: String
+    ): Either<Throwable, TimeRangeReport> {
+        return Either.catch {
+            api.getTimeRangeReport(
+                GenerateTimeRangeReportDto(
+                    start,
+                    end, accountId
+                )
+            )
+        }
+    }
 }

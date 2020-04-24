@@ -28,6 +28,7 @@ import io.github.gubarsergey.accounting.ui.login.LoginConnector
 import io.github.gubarsergey.accounting.ui.login.LoginFragment
 import io.github.gubarsergey.accounting.ui.transaction.AddTransactionsInteractor
 import io.github.gubarsergey.accounting.ui.transaction.list.AccountsInteractor
+import io.github.gubarsergey.accounting.ui.transaction.report.TimeRangeReportInteractor
 import io.github.gubarsergey.accounting.util.SharedPrefHelper
 import io.github.gubarsergey.accounting.util.asConsumer
 import okhttp3.OkHttpClient
@@ -161,9 +162,17 @@ class App : Application() {
             }
         }
 
-        val categoryTotalSpentModule = module {
+        val reportsModule = module {
             viewModel {
                 CategoryTotalSpentInteractor(
+                    get(),
+                    MutableLiveData(),
+                    MutableLiveData()
+                )
+            }
+            viewModel {
+                TimeRangeReportInteractor(
+                    get(),
                     get(),
                     MutableLiveData(),
                     MutableLiveData()
@@ -183,7 +192,7 @@ class App : Application() {
                     addAccountModule,
                     addCategoryModule,
                     categoryListModule,
-                    categoryTotalSpentModule
+                    reportsModule
                 )
             )
         }
