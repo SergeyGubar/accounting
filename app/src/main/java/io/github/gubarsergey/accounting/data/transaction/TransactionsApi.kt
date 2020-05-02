@@ -20,6 +20,9 @@ interface TransactionsApi {
 
     @POST("transactions/report/timeRange")
     suspend fun getTimeRangeReport(@Body dto: GenerateTimeRangeReportDto): TimeRangeReport
+
+    @POST("transactions/report/total")
+    suspend fun getTotalReport(): List<TotalReport?>
 }
 
 data class TransactionDto(
@@ -66,5 +69,19 @@ data class DailySpentReport(
         val day: Int,
         val year: Int,
         val createdAt: String
+    )
+}
+
+
+data class TotalReport(
+    @SerializedName("_id") val id: Id,
+    val totalEarned: Int,
+    val countEarned: Int,
+    val totalSpent: Int,
+    val countSpent: Int
+) {
+    data class Id(
+        val id: String,
+        val title: String
     )
 }

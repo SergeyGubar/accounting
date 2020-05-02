@@ -43,4 +43,10 @@ class TransactionsRepository(
             )
         }
     }
+
+    suspend fun getTotalReport(): Either<Throwable, List<TotalReport?>> {
+        return Either.catch {
+            api.getTotalReport()
+        }
+    }
 }

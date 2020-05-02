@@ -2,21 +2,27 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:icon="@drawable/ic_money_white_24dp"
         android:id="@+id/nav_accounts"
+        android:icon="@drawable/ic_money_white_24dp"
         android:title="@string/accounts"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom" />
 
     <item
-        android:icon="@drawable/ic_category_white_24dp"
         android:id="@+id/categoryListFragment"
+        android:icon="@drawable/ic_category_white_24dp"
         android:title="@string/categories"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom" />
 
     <item
-        android:icon="@drawable/ic_settings_white_24dp"
         android:id="@+id/nav_settings"
+        android:icon="@drawable/ic_settings_white_24dp"
         android:title="@string/settings"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/nav_plans"
+        android:icon="@drawable/ic_baseline_apps_24"
+        android:title="@string/plans"
+        app:showAsAction="ifRoom" />
 
 </menu>

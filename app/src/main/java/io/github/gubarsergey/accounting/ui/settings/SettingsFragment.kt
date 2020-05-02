@@ -35,5 +35,9 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
         binding.settingsTimeReportButton.setOnClickListener {
             findNavController().navigate(SettingsFragmentDirections.actionNavSettingsToTimeRangeReportFragment())
         }
+
+        binding.settingsTotalTimeReportButton.setOnClickListener {
+            findNavController().navigate(SettingsFragmentDirections.actionNavSettingsToAllTimeReportFragment())
+        }
     }
 }

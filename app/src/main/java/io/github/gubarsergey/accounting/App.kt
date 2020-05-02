@@ -26,6 +26,7 @@ import io.github.gubarsergey.accounting.ui.category.list.CategoryListInteractor
 import io.github.gubarsergey.accounting.ui.category.total.CategoryTotalSpentInteractor
 import io.github.gubarsergey.accounting.ui.login.LoginConnector
 import io.github.gubarsergey.accounting.ui.login.LoginFragment
+import io.github.gubarsergey.accounting.ui.report.AllTimeReportInteractor
 import io.github.gubarsergey.accounting.ui.transaction.AddTransactionsInteractor
 import io.github.gubarsergey.accounting.ui.transaction.list.AccountsInteractor
 import io.github.gubarsergey.accounting.ui.transaction.report.TimeRangeReportInteractor
@@ -177,6 +178,9 @@ class App : Application() {
                     MutableLiveData(),
                     MutableLiveData()
                 )
+            }
+            viewModel {
+                AllTimeReportInteractor(get())
             }
         }
 

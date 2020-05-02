@@ -51,6 +51,9 @@
         <action
             android:id="@+id/action_nav_settings_to_timeRangeReportFragment"
             app:destination="@id/timeRangeReportFragment" />
+        <action
+            android:id="@+id/action_nav_settings_to_allTimeReportFragment"
+            app:destination="@id/allTimeReportFragment" />
     </fragment>
     <fragment
         android:id="@+id/addAccountFragment"
@@ -77,4 +80,9 @@
         android:name="io.github.gubarsergey.accounting.ui.transaction.report.TimeRangeReportFragment"
         android:label="TimeRangeReportFragment"
         tools:layout="@layout/fragment_time_range_report" />
+    <fragment
+        android:id="@+id/allTimeReportFragment"
+        android:name="io.github.gubarsergey.accounting.ui.report.AllTimeReportFragment"
+        android:label="AllTimeReportFragment"
+        tools:layout="@layout/fragment_total_report" />
 </navigation>

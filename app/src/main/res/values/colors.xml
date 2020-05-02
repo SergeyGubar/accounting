@@ -5,6 +5,10 @@
     <color name="colorAccent">@color/colorPrimary</color>
     <color name="colorOnPrimary">#ffffff</color>
     <color name="colorSecondary">#3949ab</color>
+    <color name="light_blue_400">#29B6F6</color>
+    <color name="light_blue_600">#039BE5</color>
+    <color name="gray_400">#BDBDBD</color>
+    <color name="gray_600">#757575</color>
 
 
 </resources>
