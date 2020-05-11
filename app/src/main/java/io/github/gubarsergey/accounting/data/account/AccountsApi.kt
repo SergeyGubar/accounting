@@ -11,8 +11,15 @@ interface AccountsApi {
 
     @POST("accounts")
     suspend fun addAccount(@Body dto: CreateAccountDto): Account
+
+    @POST("accounts/remaining")
+    suspend fun changeRemaining(@Body dto: ChangeRemainingDto): Account
 }
 
+data class ChangeRemainingDto(
+    val id: String,
+    val amount: Int
+)
 
 data class CreateAccountDto(
     val title: String,

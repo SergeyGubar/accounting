@@ -54,6 +54,9 @@
         <action
             android:id="@+id/action_nav_settings_to_allTimeReportFragment"
             app:destination="@id/allTimeReportFragment" />
+        <action
+            android:id="@+id/action_nav_settings_to_changeRemainingFragment"
+            app:destination="@id/changeRemainingFragment" />
     </fragment>
     <fragment
         android:id="@+id/addAccountFragment"
@@ -85,4 +88,9 @@
         android:name="io.github.gubarsergey.accounting.ui.report.AllTimeReportFragment"
         android:label="AllTimeReportFragment"
         tools:layout="@layout/fragment_total_report" />
+    <fragment
+        android:id="@+id/changeRemainingFragment"
+        android:name="io.github.gubarsergey.accounting.ui.remaining.ChangeRemainingFragment"
+        android:label="ChangeRemainingFragment"
+        tools:layout="@layout/fragment_change_remaining" />
 </navigation>

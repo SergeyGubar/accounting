@@ -26,6 +26,16 @@
         app:cornerRadius="24dp" />
 
     <Button
+        android:id="@+id/settings_change_remaining_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="72dp"
+        android:text="@string/change_remaining"
+        app:cornerRadius="24dp" />
+
+    <Button
         android:id="@+id/settings_categories_total_spent_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

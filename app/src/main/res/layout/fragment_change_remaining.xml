@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:id="@+id/select_account_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/select_your_account"
+        android:textAppearance="?attr/textAppearanceBody2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.19" />
+
+    <Spinner
+        android:id="@+id/accounts_spinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/select_account_text_view" />
+
+    <TextView
+        android:id="@+id/enter_amount_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/enter_new_amount"
+        android:textAppearance="?attr/textAppearanceBody2"
+        app:layout_constraintStart_toStartOf="@+id/accounts_spinner"
+        app:layout_constraintTop_toBottomOf="@+id/accounts_spinner" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/amount_edit_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:ems="10"
+        android:hint="@string/amount"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/enter_amount_text_view"
+        app:layout_constraintTop_toBottomOf="@+id/enter_amount_text_view" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/save_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="54dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="54dp"
+        android:text="@string/save"
+        app:cornerRadius="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/amount_edit_text" />
+</androidx.constraintlayout.widget.ConstraintLayout>

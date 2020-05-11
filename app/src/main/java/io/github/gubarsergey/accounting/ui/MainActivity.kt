@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity(), Router {
 
         findNavController(R.id.nav_host_fragment).addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.loginFragment, R.id.addTransactionFragment, R.id.addAccountFragment, R.id.addCategoryFragment -> {
+                R.id.loginFragment, R.id.addTransactionFragment, R.id.addAccountFragment, R.id.addCategoryFragment, R.id.changeRemainingFragment -> {
                     binding.bottomNavigation.makeGone()
                 }
                 else -> {

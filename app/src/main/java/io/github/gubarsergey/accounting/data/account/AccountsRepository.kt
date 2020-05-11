@@ -40,4 +40,8 @@ class AccountsRepository(
     suspend fun deleteTransaction(id: String) = Either.catch {
         transactionsApi.deleteTransaction(id)
     }
+
+    suspend fun changeRemaining(id: String, remaining: Int) = Either.catch {
+        api.changeRemaining(ChangeRemainingDto(id, remaining))
+    }
 }
