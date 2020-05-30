@@ -1,15 +1,14 @@
 package io.github.gubarsergey.accounting.ui.remaining
 
 import androidx.lifecycle.viewModelScope
-import arrow.core.extensions.either.foldable.fold
 import io.github.gubarsergey.accounting.data.account.Account
 import io.github.gubarsergey.accounting.data.account.AccountsRepository
-import io.github.gubarsergey.accounting.ui.report.BaseInteractor
+import io.github.gubarsergey.accounting.ui.BaseViewModel
 import kotlinx.coroutines.launch
 
 class ChangeRemainingInteractor(
     private val accountsRepository: AccountsRepository
-) : BaseInteractor<ChangeRemainingIntent, ChangeRemainingEvent, ChangeRemainingFragment.Props, ChangeRemainingInteractor.State>(
+) : BaseViewModel<ChangeRemainingIntent, ChangeRemainingEvent, ChangeRemainingFragment.Props, ChangeRemainingInteractor.State>(
     State()
 ) {
 
