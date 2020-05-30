@@ -16,7 +16,6 @@ class AllTimeReportInteractor(
         >(
     State()
 ) {
-
     data class State(
         val reports: List<TotalReport?> = emptyList()
     )
@@ -54,7 +53,10 @@ class AllTimeReportInteractor(
                     it.totalEarned,
                     it.countEarned,
                     it.totalSpent,
-                    it.countSpent
+                    it.countSpent,
+                    it.id.currency,
+                    it.usdCourse,
+                    it.eurCourse
                 )
             }
         })

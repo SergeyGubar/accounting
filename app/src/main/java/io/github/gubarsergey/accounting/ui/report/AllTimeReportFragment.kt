@@ -7,8 +7,12 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.github.gubarsergey.accounting.BaseFragment
+import io.github.gubarsergey.accounting.R
 import io.github.gubarsergey.accounting.databinding.FragmentTotalReportBinding
 import org.koin.android.ext.android.inject
+import timber.log.Timber
+import java.math.RoundingMode
+import java.text.DecimalFormat
 
 class AllTimeReportFragment : BaseFragment<FragmentTotalReportBinding>() {
 
@@ -24,7 +28,10 @@ class AllTimeReportFragment : BaseFragment<FragmentTotalReportBinding>() {
             val totalEarned: Int,
             val countEarned: Int,
             val totalSpent: Int,
-            val countSpent: Int
+            val countSpent: Int,
+            val currency: String,
+            val usdCourse: Double,
+            val eurCourse: Double
         )
     }
 
@@ -48,6 +55,41 @@ class AllTimeReportFragment : BaseFragment<FragmentTotalReportBinding>() {
     }
 
     private fun render(props: Props) {
+        Timber.d("render $props")
+        with(binding) {
+            val totalEarned = props.reports.fold(0.0, { a, b ->
+                when {
+                    b.currency.equals("usd", true) -> a + b.totalEarned * b.usdCourse
+                    b.currency.equals("eur", true) -> a + b.totalEarned * b.eurCourse
+                    else -> a + b.totalEarned
+                }
+            })
+            val totalSpent = props.reports.fold(0.0, { a, b ->
+                when {
+                    b.currency.equals("usd", true) -> a + b.totalSpent * b.usdCourse
+                    b.currency.equals("eur", true) -> a + b.totalSpent * b.eurCourse
+                    else -> a + b.totalEarned
+                }
+            })
+
+            val totalEarnedNumberOfTransactions = props.reports.sumBy { it.countEarned }
+            val totalSpentNumberOfTransactions = props.reports.sumBy { it.countSpent }
+
+
+            val df = DecimalFormat("#.##")
+            df.roundingMode = RoundingMode.CEILING
+
+            totalReportEarnedTextView.text = getString(
+                R.string.for_all_time_you_earned_template,
+                df.format(totalEarned),
+                totalEarnedNumberOfTransactions.toString()
+            )
+            totalReportSpentTextView.text = getString(
+                R.string.for_all_time_you_spent_template,
+                df.format(totalSpent),
+                totalSpentNumberOfTransactions.toString()
+            )
+        }
         adapter.submitList(props.reports)
     }
 }

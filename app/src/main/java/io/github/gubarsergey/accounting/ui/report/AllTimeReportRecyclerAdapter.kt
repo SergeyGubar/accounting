@@ -1,12 +1,18 @@
 package io.github.gubarsergey.accounting.ui.report
 
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.AutoTransition
+import androidx.transition.TransitionManager
+import io.github.gubarsergey.accounting.R
 import io.github.gubarsergey.accounting.databinding.ItemAllTimeReportBinding
 import io.github.gubarsergey.accounting.ui.report.AllTimeReportFragment.Props.AccountReport
 import io.github.gubarsergey.accounting.util.inflater
+import io.github.gubarsergey.accounting.util.makeGone
+import io.github.gubarsergey.accounting.util.makeVisible
 
 class AllTimeReportRecyclerAdapter :
     ListAdapter<AccountReport, AllTimeReportRecyclerAdapter.AllTimeReportViewHolder>(
@@ -29,10 +35,29 @@ class AllTimeReportRecyclerAdapter :
     inner class AllTimeReportViewHolder(private val binding: ItemAllTimeReportBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: AccountReport) = with(binding) {
+            root.setOnClickListener {
+                if (contentContainer.isVisible) {
+                    TransitionManager.beginDelayedTransition(root, AutoTransition())
+                    contentContainer.makeGone()
+                } else {
+                    TransitionManager.beginDelayedTransition(root, AutoTransition())
+                    contentContainer.makeVisible()
+                }
+            }
             cardTitleTextView.text = item.title
-            cardTotalEarnedTextView.text = item.totalEarned.toString()
-            cardTotalSpentTextView.text = item.totalSpent.toString()
-            cardTotalNumberOfTransactionsTextView.text = item.countEarned.toString()
+            cardTotalEarnedTextView.text = itemView.context.getString(
+                R.string.for_card_you_earned_template,
+                item.title,
+                item.totalEarned.toString(),
+                item.currency,
+                item.countEarned.toString()
+            )
+            cardTotalSpentTextView.text = itemView.context.getString(
+                R.string.for_card_you_lost_template,
+                item.totalSpent.toString(),
+                item.currency,
+                item.countSpent.toString()
+            )
         }
     }
 }

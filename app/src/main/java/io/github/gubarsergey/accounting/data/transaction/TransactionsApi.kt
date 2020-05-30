@@ -78,10 +78,13 @@ data class TotalReport(
     val totalEarned: Int,
     val countEarned: Int,
     val totalSpent: Int,
-    val countSpent: Int
+    val countSpent: Int,
+    val usdCourse: Double,
+    val eurCourse: Double
 ) {
     data class Id(
         val id: String,
-        val title: String
+        val title: String,
+        val currency: String
     )
 }

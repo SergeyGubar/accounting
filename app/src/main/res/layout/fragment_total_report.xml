@@ -9,11 +9,46 @@
         android:id="@+id/card_reports_recycler"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/total_report_spent_text_view"
         tools:itemCount="4"
         tools:listitem="@layout/item_all_time_report" />
+
+    <TextView
+        android:id="@+id/total_report_text_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        style="?attr/textAppearanceBody1"
+        android:text="Your statistics for all card, all time:"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/total_report_earned_text_view"
+        style="?attr/textAppearanceBody2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/total_report_text_view"
+        app:layout_constraintStart_toStartOf="@+id/total_report_text_view"
+        app:layout_constraintTop_toBottomOf="@+id/total_report_text_view" />
+
+    <TextView
+        android:id="@+id/total_report_spent_text_view"
+        style="?attr/textAppearanceBody2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/total_report_earned_text_view"
+        app:layout_constraintStart_toStartOf="@+id/total_report_earned_text_view"
+        app:layout_constraintTop_toBottomOf="@+id/total_report_earned_text_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

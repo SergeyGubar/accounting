@@ -47,4 +47,10 @@
     <string name="select_your_account">Select your account:</string>
     <string name="enter_new_amount">Enter new amount:</string>
     <string name="change_remaining">Change remaining</string>
+    <string name="for_card_you_earned_template">For the %1$s you earned %2$s %3$s in total. Number of transactions: %4$s</string>
+    <string name="for_card_you_lost_template">Total spent for this card %1$s %2$s with amount of transactions: %3$s</string>
+
+    <string name="for_all_time_you_earned_template">You earned %1$s UAH in %2$s transactions</string>
+    <string name="for_all_time_you_spent_template">You spent %1$s UAH in %2$s transactions</string>
+
 </resources>
