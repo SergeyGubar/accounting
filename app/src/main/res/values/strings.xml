@@ -52,5 +52,7 @@
 
     <string name="for_all_time_you_earned_template">You earned %1$s UAH in %2$s transactions</string>
     <string name="for_all_time_you_spent_template">You spent %1$s UAH in %2$s transactions</string>
-
+    <string name="predictions">Predictions</string>
+    <string name="formula_n">Formula: %1$s</string>
+    <string name="coef_n">Coef: %1$s</string>
 </resources>

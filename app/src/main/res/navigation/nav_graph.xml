@@ -57,6 +57,9 @@
         <action
             android:id="@+id/action_nav_settings_to_changeRemainingFragment"
             app:destination="@id/changeRemainingFragment" />
+        <action
+            android:id="@+id/action_nav_settings_to_predictionFragment"
+            app:destination="@id/predictionFragment" />
     </fragment>
     <fragment
         android:id="@+id/addAccountFragment"
@@ -93,4 +96,9 @@
         android:name="io.github.gubarsergey.accounting.ui.remaining.ChangeRemainingFragment"
         android:label="ChangeRemainingFragment"
         tools:layout="@layout/fragment_change_remaining" />
+    <fragment
+        android:id="@+id/predictionFragment"
+        android:name="io.github.gubarsergey.accounting.ui.prediction.PredictionFragment"
+        android:label="PredictionFragment"
+        tools:layout="@layout/fragment_predictions" />
 </navigation>

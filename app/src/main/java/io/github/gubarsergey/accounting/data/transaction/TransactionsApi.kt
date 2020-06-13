@@ -2,7 +2,9 @@ package io.github.gubarsergey.accounting.data.transaction
 
 import com.google.gson.annotations.SerializedName
 import io.github.gubarsergey.accounting.data.category.CategoryDto
+import io.github.gubarsergey.accounting.ui.prediction.PredictionsDto
 import retrofit2.http.*
+import java.util.*
 
 
 interface TransactionsApi {
@@ -14,6 +16,9 @@ interface TransactionsApi {
 
     @DELETE("transactions/{id}")
     suspend fun deleteTransaction(@Path("id") id: String): TransactionDto
+
+    @GET("transactions/report/prediction/{id}")
+    suspend fun getPredictions(@Path("id") id: String): PredictionsDto
 
     @GET("transactions/category/categoryTotalSpent")
     suspend fun getGategoriesTotalSpent(): List<CategoryTotalSpentDto>
@@ -28,10 +33,11 @@ interface TransactionsApi {
 data class TransactionDto(
     @SerializedName("_id") val id: String,
     val amount: Int,
-    val currentAmount: Double,
     val category: CategoryDto,
-    val message: String
+    val message: String,
+    val createdAt: Date
 )
+
 
 data class CreateTransactionDto(
     val accountId: String,

@@ -29,6 +29,7 @@ class TransactionsRecyclerAdapter(
                 onItemLongClick(item.id, item.message)
                 false
             }
+            recordBinding.itemRecordDateTextView.text = item.date
         }
     }
 

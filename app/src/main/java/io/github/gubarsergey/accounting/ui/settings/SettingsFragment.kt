@@ -43,5 +43,8 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
         binding.settingsChangeRemainingButton.setOnClickListener {
             findNavController().navigate(SettingsFragmentDirections.actionNavSettingsToChangeRemainingFragment())
         }
+        binding.settingsPredictionsButton.setOnClickListener {
+            findNavController().navigate(SettingsFragmentDirections.actionNavSettingsToPredictionFragment())
+        }
     }
 }

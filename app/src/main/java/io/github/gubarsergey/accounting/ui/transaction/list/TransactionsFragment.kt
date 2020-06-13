@@ -38,7 +38,8 @@ class TransactionsFragment : BaseFragment<FragmentTransactionsBinding>() {
             val id: String,
             val amount: Int,
             val category: String,
-            val message: String?
+            val message: String?,
+            val date: String
         )
     }
 
@@ -85,7 +86,8 @@ class TransactionsFragment : BaseFragment<FragmentTransactionsBinding>() {
                             transaction.id,
                             transaction.amount,
                             transaction.category,
-                            transaction.message ?: ""
+                            transaction.message ?: "",
+                            transaction.date
                         )
                     })
             }

@@ -46,6 +46,7 @@ class AddCategoryFragment : BaseFragment<FragmentAddCategoryBinding>() {
         val title = binding.addCategoryEditText.text.toString()
         if (title.isNotBlank()) {
             onSuccess(title)
+            return
         }
         snackbar("Input is not valid!")
     }

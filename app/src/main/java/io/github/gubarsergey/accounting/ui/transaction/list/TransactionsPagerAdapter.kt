@@ -32,7 +32,8 @@ class TransactionsPagerAdapter(
                 val id: String,
                 val amount: Int,
                 val category: String,
-                val message: String
+                val message: String,
+                val date: String
             )
         }
     }

@@ -3,6 +3,7 @@ package io.github.gubarsergey.accounting.data.transaction
 import arrow.core.Either
 import io.github.gubarsergey.accounting.errors.NetworkError
 import io.github.gubarsergey.accounting.errors.networkErrorMapper
+import io.github.gubarsergey.accounting.ui.prediction.PredictionsDto
 import timber.log.Timber
 
 class TransactionsRepository(
@@ -47,6 +48,12 @@ class TransactionsRepository(
     suspend fun getTotalReport(): Either<Throwable, List<TotalReport?>> {
         return Either.catch {
             api.getTotalReport()
+        }
+    }
+
+    suspend fun getPredictions(accountId: String): Either<Throwable, PredictionsDto> {
+        return Either.catch {
+            api.getPredictions(accountId)
         }
     }
 }

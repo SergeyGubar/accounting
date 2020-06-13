@@ -68,7 +68,7 @@ class AllTimeReportFragment : BaseFragment<FragmentTotalReportBinding>() {
                 when {
                     b.currency.equals("usd", true) -> a + b.totalSpent * b.usdCourse
                     b.currency.equals("eur", true) -> a + b.totalSpent * b.eurCourse
-                    else -> a + b.totalEarned
+                    else -> a + b.totalSpent
                 }
             })
 

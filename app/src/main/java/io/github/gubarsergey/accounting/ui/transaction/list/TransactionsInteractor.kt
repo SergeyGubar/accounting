@@ -8,6 +8,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.text.SimpleDateFormat
+import java.util.*
 import kotlin.coroutines.CoroutineContext
 
 interface BaseInteractor : CoroutineScope {
@@ -103,6 +105,7 @@ class AccountsInteractor(
     }
 
     private fun map(state: AccountsState): TransactionsFragment.Props {
+        val format = SimpleDateFormat ("'Date:' yyyy-MM-dd")
         return if (state.accountsInfo.isEmpty()) {
             TransactionsFragment.Props()
         } else {
@@ -118,7 +121,8 @@ class AccountsInteractor(
                                 it.id,
                                 it.amount,
                                 it.category.title,
-                                it.message
+                                it.message,
+                                format.format(it.createdAt)
                             )
                         }
                     )

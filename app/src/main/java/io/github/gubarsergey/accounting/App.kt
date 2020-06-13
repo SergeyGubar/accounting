@@ -26,6 +26,7 @@ import io.github.gubarsergey.accounting.ui.category.list.CategoryListInteractor
 import io.github.gubarsergey.accounting.ui.category.total.CategoryTotalSpentInteractor
 import io.github.gubarsergey.accounting.ui.login.LoginConnector
 import io.github.gubarsergey.accounting.ui.login.LoginFragment
+import io.github.gubarsergey.accounting.ui.prediction.PredictionsInteractor
 import io.github.gubarsergey.accounting.ui.remaining.ChangeRemainingInteractor
 import io.github.gubarsergey.accounting.ui.report.AllTimeReportInteractor
 import io.github.gubarsergey.accounting.ui.transaction.AddTransactionsInteractor
@@ -188,6 +189,9 @@ class App : Application() {
             }
             viewModel {
                 AllTimeReportInteractor(get())
+            }
+            viewModel {
+                PredictionsInteractor(get(), get())
             }
         }
 
